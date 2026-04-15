@@ -449,8 +449,53 @@ h3 {
 .compare-table td:first-child,
 .summary-table td:first-child,
 .impact-table td:first-child {
+  width: 15%;
+  min-width: 110px;
   font-weight: 700;
   color: var(--title);
+}
+
+.compare-table th:first-child,
+.summary-table th:first-child,
+.impact-table th:first-child {
+  width: 15%;
+  min-width: 110px;
+}
+
+.compare-table th:nth-child(2),
+.compare-table td:nth-child(2),
+.summary-table th:nth-child(2),
+.summary-table td:nth-child(2) {
+  width: 45%;
+}
+
+.compare-table th:nth-child(3),
+.compare-table td:nth-child(3),
+.summary-table th:nth-child(3),
+.summary-table td:nth-child(3) {
+  width: 40%;
+}
+
+.summary-table th:nth-child(4),
+.summary-table td:nth-child(4) {
+  width: 14%;
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.summary-table:has(th:nth-child(4)) th:first-child,
+.summary-table:has(td:nth-child(4)) td:first-child {
+  width: 12%;
+}
+
+.summary-table:has(th:nth-child(4)) th:nth-child(2),
+.summary-table:has(td:nth-child(4)) td:nth-child(2) {
+  width: 37%;
+}
+
+.summary-table:has(th:nth-child(4)) th:nth-child(3),
+.summary-table:has(td:nth-child(4)) td:nth-child(3) {
+  width: 37%;
 }
 
 .feature-card,
