@@ -498,6 +498,24 @@ h3 {
   width: 37%;
 }
 
+.conclusion-table td:first-child,
+.conclusion-table th:first-child {
+  width: 16%;
+  min-width: 120px;
+}
+
+.conclusion-table td:nth-child(2),
+.conclusion-table th:nth-child(2) {
+  width: 12%;
+  min-width: 80px;
+  text-align: center;
+}
+
+.conclusion-table td:nth-child(3),
+.conclusion-table th:nth-child(3) {
+  width: 72%;
+}
+
 .feature-card,
 .stat-card {
   padding: 22px;

@@ -214,7 +214,7 @@ function SummaryTableSection({ section }) {
     <section className="section-block">
       <SectionHeading section={section} />
       <div className="table-card">
-        <table className="summary-table">
+        <table className={`summary-table${section.tableClass ? ` ${section.tableClass}` : ""}`}>
           <thead>
             <tr>
               {section.columns.map((column, index) => (
@@ -603,7 +603,7 @@ export function ReportSectionRenderer({ section }) {
   if (section.type === "closingBanner") {
     return (
       <section className="section-block">
-        <div className="closing-banner">{section.text}</div>
+        <div className="closing-banner" dangerouslySetInnerHTML={{ __html: section.text }} />
       </section>
     );
   }
