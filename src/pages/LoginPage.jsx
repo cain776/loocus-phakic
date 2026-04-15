@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const PASS_KEY = "loocus-phakic-auth";
-const VALID_PASSWORD = "loocus2026";
+const VALID_PASSWORD = "MJ01";
 
 export function isAuthenticated() {
   return sessionStorage.getItem(PASS_KEY) === "1";
