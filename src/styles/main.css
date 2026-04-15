@@ -207,6 +207,30 @@ code {
   color: var(--primary);
 }
 
+.theme-toggle-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border);
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+.theme-toggle .logout-btn {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-soft);
+  padding: 7px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition: color 0.15s ease;
+}
+
+.theme-toggle .logout-btn:hover {
+  color: var(--danger);
+}
+
 .toc {
   position: fixed;
   top: 82px;
