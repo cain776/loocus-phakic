@@ -5,33 +5,33 @@
   },
   "navigation": [
     {
-      "label": "OVERVIEW",
+      "label": "개요",
       "items": [
-        { "id": "index", "title": "대시보드" },
+        { "id": "index", "title": "전체 개요" },
         { "id": "summary", "title": "핵심 요약", "tag": "핵심" }
       ]
     },
     {
       "label": "제품 진단",
       "items": [
-        { "id": "current-state", "title": "현재 어디에 와 있는가" },
-        { "id": "product-review", "title": "제품 상세 및 UI/UX 평가" },
+        { "id": "current-state", "title": "현재 상태" },
+        { "id": "product-review", "title": "제품/UI 진단" },
         { "id": "market", "title": "ICL 시장 현황", "tag": "2026.04" },
-        { "id": "dilemma", "title": "왜 딜레마인가" }
+        { "id": "dilemma", "title": "핵심 딜레마" }
       ]
     },
     {
       "label": "전략 옵션",
       "items": [
-        { "id": "options", "title": "테이블 위의 선택지" },
-        { "id": "gaps", "title": "빠져 있는 것", "tag": "선결" },
-        { "id": "requirements", "title": "방향별로 필요한 것", "tag": "액션" }
+        { "id": "options", "title": "전략 선택지" },
+        { "id": "gaps", "title": "선결 과제", "tag": "선결" },
+        { "id": "requirements", "title": "실행 조건", "tag": "액션" }
       ]
     },
     {
       "label": "결론",
       "items": [
-        { "id": "conclusion", "title": "정리하면" }
+        { "id": "conclusion", "title": "최종 정리" }
       ]
     }
   ],
