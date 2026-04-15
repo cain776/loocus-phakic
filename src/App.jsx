@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { fetchReportCatalog } from "./api/reportApi";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ReportRoute } from "./pages/ReportRoute";
+import { LoginPage, isAuthenticated } from "./pages/LoginPage";
 
 function LoadingView() {
   return (
@@ -30,6 +31,7 @@ function ErrorView({ message }) {
 }
 
 export default function App() {
+  const [authed, setAuthed] = useState(isAuthenticated());
   const [catalog, setCatalog] = useState(null);
   const [error, setError] = useState("");
 
@@ -59,6 +61,10 @@ export default function App() {
       cancelled = true;
     };
   }, []);
+
+  if (!authed) {
+    return <LoginPage onSuccess={() => setAuthed(true)} />;
+  }
 
   if (error) {
     return <ErrorView message={error} />;

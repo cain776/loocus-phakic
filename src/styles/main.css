@@ -912,6 +912,112 @@ h3 {
   text-transform: uppercase;
 }
 
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(74, 158, 255, 0.10), transparent 40%),
+    var(--bg);
+}
+
+.login-card {
+  width: min(420px, 100%);
+  padding: 48px 40px;
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.login-brand {
+  color: var(--primary);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  color: var(--text-soft);
+  font-size: 14px;
+  margin: 0 0 36px;
+}
+
+.login-input {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.login-input::placeholder {
+  color: var(--muted);
+}
+
+.login-input:focus {
+  border-color: var(--primary);
+}
+
+.login-input.login-error {
+  border-color: var(--danger);
+}
+
+.login-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--primary), #2563eb);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 16px rgba(74, 158, 255, 0.3);
+}
+
+.login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(74, 158, 255, 0.4);
+}
+
+.login-error-msg {
+  margin: 16px 0 0;
+  color: var(--danger);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.login-footer {
+  margin: 32px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.login-card.shake {
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
 .image-block {
   border-radius: var(--radius-md);
   overflow: hidden;
