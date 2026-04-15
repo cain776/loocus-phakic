@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>도입 단계별 로드맵 — 청주김안과</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* 타임라인 개요 바 */
+  .timeline { display: grid; grid-template-columns: 1.9fr 2.8fr 3.7fr 1.9fr 1.7fr; gap: 4px; margin: 24px 0 8px; border-radius: 8px; overflow: hidden; }
+  .tl-seg { padding: 14px 16px; color: #fff; font-size: 12.5px; font-weight: 700; text-align: center; position: relative; }
+  .tl-seg span { display: block; font-size: 10.5px; font-weight: 500; opacity: .85; margin-top: 3px; letter-spacing: .3px; }
+  .tl-p1 { background: #1e3a5f; }
+  .tl-p2 { background: #1e40af; }
+  .tl-p3 { background: #4a9eff; color: #0f172a; }
+  .tl-p4 { background: #f59e0b; color: #0f172a; }
+  .tl-p5 { background: #22c55e; color: #0f172a; }
+  .tl-axis { display: grid; grid-template-columns: 1.9fr 2.8fr 3.7fr 1.9fr 1.7fr; gap: 4px; font-size: 11px; color: #8b92a0; margin-bottom: 26px; }
+  .tl-axis div { text-align: center; padding: 4px 0; }
+  body[data-theme="light"] .tl-axis div { color: #6b7280; }
+
+  /* Phase 블록 */
+  .phase { background: #161b22; border: 1px solid #222; border-radius: 10px; padding: 26px; margin-bottom: 18px; border-left: 4px solid #4a9eff; }
+  body[data-theme="light"] .phase { background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid #4a9eff; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+  .phase.p1 { border-left-color: #1e3a5f; }
+  .phase.p2 { border-left-color: #1e40af; }
+  .phase.p3 { border-left-color: #4a9eff; }
+  .phase.p4 { border-left-color: #f59e0b; }
+  .phase.p5 { border-left-color: #22c55e; }
+
+  .phase-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .phase-num { font-size: 12px; color: #8b92a0; font-weight: 700; letter-spacing: .5px; }
+  .phase-title { font-size: 20px; font-weight: 800; color: #fff; }
+  body[data-theme="light"] .phase-title { color: #111827; }
+  .phase-week { display: inline-block; font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: #1e3a5f; color: #93c5fd; letter-spacing: .3px; }
+  body[data-theme="light"] .phase-week { background: #dbeafe; color: #1d4ed8; }
+  .phase.p4 .phase-week { background: #78350f; color: #fbbf24; }
+  body[data-theme="light"] .phase.p4 .phase-week { background: #fef3c7; color: #b45309; }
+  .phase.p5 .phase-week { background: #14532d; color: #86efac; }
+  body[data-theme="light"] .phase.p5 .phase-week { background: #dcfce7; color: #15803d; }
+
+  .phase-goal { color: #8b92a0; font-size: 13.5px; margin-bottom: 16px; line-height: 1.6; }
+  body[data-theme="light"] .phase-goal { color: #6b7280; }
+
+  .phase h3 { font-size: 12px; color: #4a9eff; margin: 18px 0 10px; letter-spacing: .5px; text-transform: uppercase; font-weight: 700; }
+  body[data-theme="light"] .phase h3 { color: #2563eb; }
+
+  .weekly { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 10px; }
+  .wk { background: #0f1419; border: 1px solid #1a1f26; border-radius: 6px; padding: 14px 16px; }
+  body[data-theme="light"] .wk { background: #f9fafb; border-color: #e5e7eb; }
+  .wk-label { font-size: 10.5px; font-weight: 700; color: #4a9eff; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; }
+  body[data-theme="light"] .wk-label { color: #2563eb; }
+  .wk ul { list-style: none; }
+  .wk ul li { position: relative; padding: 3px 0 3px 14px; font-size: 12.5px; color: #dfe2e8; line-height: 1.55; }
+  body[data-theme="light"] .wk ul li { color: #1f2937; }
+  .wk ul li::before { content: "→"; position: absolute; left: 0; color: #4a9eff; font-weight: 700; }
+
+  .deliv-risk { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  @media (max-width: 900px) { .deliv-risk { grid-template-columns: 1fr; } }
+  .dr-box { border-radius: 6px; padding: 14px 16px; }
+  .dr-box.deliv { background: #0f1419; border-left: 3px solid #22c55e; }
+  .dr-box.risk { background: #0f1419; border-left: 3px solid #f59e0b; }
+  body[data-theme="light"] .dr-box.deliv { background: #f0fdf4; }
+  body[data-theme="light"] .dr-box.risk { background: #fffbeb; }
+  .dr-label { font-size: 10.5px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 8px; }
+  .dr-box.deliv .dr-label { color: #22c55e; }
+  .dr-box.risk .dr-label { color: #f59e0b; }
+  .dr-box ul { list-style: none; }
+  .dr-box ul li { position: relative; padding: 3px 0 3px 14px; font-size: 12.5px; color: #dfe2e8; line-height: 1.55; }
+  body[data-theme="light"] .dr-box ul li { color: #1f2937; }
+  .dr-box.deliv ul li::before { content: "✓"; position: absolute; left: 0; color: #22c55e; font-weight: 700; }
+  .dr-box.risk ul li::before { content: "!"; position: absolute; left: 0; color: #f59e0b; font-weight: 800; }
+
+  .owner-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .owner-tag { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 4px; background: #1a1f26; color: #93c5fd; border: 1px solid #1e3a5f; }
+  body[data-theme="light"] .owner-tag { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+
+  .code-inline { background: #0f1419; color: #4a9eff; padding: 1px 6px; border-radius: 3px; font-family: 'Consolas', monospace; font-size: 12px; }
+  body[data-theme="light"] .code-inline { background: #eff6ff; color: #2563eb; }
+
+  /* 전체 요약 표 */
+  .summary-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .summary-tbl th, .summary-tbl td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #222; vertical-align: top; }
+  body[data-theme="light"] .summary-tbl th, body[data-theme="light"] .summary-tbl td { border-bottom: 1px solid #e5e7eb; }
+  .summary-tbl thead th { background: #0f1419; color: #8b92a0; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+  body[data-theme="light"] .summary-tbl thead th { background: #f9fafb; color: #6b7280; }
+  .summary-tbl td:first-child { font-weight: 700; color: #e4e6eb; width: 120px; }
+  body[data-theme="light"] .summary-tbl td:first-child { color: #111827; }
+</style>
+</head>
+<body>
+<script>window.CURRENT_PAGE = 'roadmap';</script>
+<script src="../assets/layout.js" data-base="../"></script>
+
+<main class="main">
+  <div class="section-badge">ROADMAP — DETAILED SCHEDULE</div>
+  <h1>도입 단계별 로드맵</h1>
+  <div class="subtitle">
+    <a href="adoption.html" style="color:#4a9eff">도입 방안</a>의 5단계를 <b>주 단위 실행 계획</b>으로 구체화했습니다.
+    각 Phase의 작업·산출물·리스크·담당을 명시하여 진척 관리와 의사결정 근거로 활용할 수 있습니다.
+  </div>
+
+  <!-- ============ 전체 타임라인 ============ -->
+  <h2>전체 일정 (총 12주)</h2>
+  <div class="timeline">
+    <div class="tl-seg tl-p1">Phase 1 · 현황 분석<span>2주</span></div>
+    <div class="tl-seg tl-p2">Phase 2 · 데이터 이관<span>3주</span></div>
+    <div class="tl-seg tl-p3">Phase 3 · 커스터마이징<span>4주</span></div>
+    <div class="tl-seg tl-p4">Phase 4 · 파일럿<span>2주</span></div>
+    <div class="tl-seg tl-p5">Phase 5 · 오픈<span>1주</span></div>
+  </div>
+  <div class="tl-axis">
+    <div>W1 ~ W2</div>
+    <div>W3 ~ W5</div>
+    <div>W6 ~ W9</div>
+    <div>W10 ~ W11</div>
+    <div>W12</div>
+  </div>
+
+  <!-- ============ Phase 1 ============ -->
+  <div class="phase p1">
+    <div class="phase-head">
+      <span class="phase-num">[PHASE 1]</span>
+      <span class="phase-title">📋 현황 분석</span>
+      <span class="phase-week">W1 ~ W2 · 2주</span>
+    </div>
+    <div class="phase-goal">
+      청주김안과 현행 전산환경(성민CRM · MD소프트 · 종이차트)의 실제 데이터 구조와 운영 흐름을 파악하고,
+      도입 범위·이관 대상·커스터마이징 요구사항을 확정합니다. 이관 난이도와 리스크를 이 단계에서 정확히 측정해야 이후 Phase의 일정이 어긋나지 않습니다.
+    </div>
+
+    <h3>주 단위 실행 계획</h3>
+    <div class="weekly">
+      <div class="wk">
+        <div class="wk-label">Week 1 · 환경 파악</div>
+        <ul>
+          <li>DB 스키마 덤프 확보 (SOFTCRM/MCRM/IPLUS 또는 현행 DB)</li>
+          <li>Linked Server · 암호화 필드 <span class="code-inline">DECRYPTBYPASSPHRASE</span> 구조 파악</li>
+          <li>핵심 테이블 규모 실측 (CUSTOM · MsgSndLst · CUSTOM_MEMO)</li>
+          <li>원장님 · 실장님 · 상담팀 · 데스크 인터뷰 (업무 흐름)</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">Week 2 · 요구사항 정의</div>
+        <ul>
+          <li>병원 전용 검사 항목 · 상담 양식 수집</li>
+          <li>리콜 정책 · 내원동기 분류 체계 확인</li>
+          <li>직원 권한 매트릭스 정의 (RBAC 기반)</li>
+          <li>요구사항 정의서(RFP) 확정 및 승인</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deliv-risk">
+      <div class="dr-box deliv">
+        <div class="dr-label">SUCCESS CRITERIA · 산출물</div>
+        <ul>
+          <li>요구사항 정의서 (RFP) — 원장님 승인본</li>
+          <li>현행 DB 스키마 분석 리포트</li>
+          <li>이관 대상 테이블·필드 맵핑 초안</li>
+          <li>리스크 등록부 (Risk Register) 초안</li>
+        </ul>
+      </div>
+      <div class="dr-box risk">
+        <div class="dr-label">주요 리스크</div>
+        <ul>
+          <li>암호화 필드의 패스프레이즈 확보 불가 시 이관 지연</li>
+          <li>RTF 메모 구조가 문서마다 상이해 정제 난이도 상승 가능</li>
+          <li>인터뷰 일정이 진료 스케줄과 충돌하여 요구사항 누락 가능</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="owner-row">
+      <span class="owner-tag">담당: 비쥬웍스 PM</span>
+      <span class="owner-tag">담당: DB 엔지니어</span>
+      <span class="owner-tag">협조: 청주김안과 IT 담당</span>
+      <span class="owner-tag">협조: 실장님</span>
+    </div>
+  </div>
+
+  <!-- ============ Phase 2 ============ -->
+  <div class="phase p2">
+    <div class="phase-head">
+      <span class="phase-num">[PHASE 2]</span>
+      <span class="phase-title">🗃 데이터 이관</span>
+      <span class="phase-week">W3 ~ W5 · 3주</span>
+    </div>
+    <div class="phase-goal">
+      고객·예약·수술·메모·SMS 등 핵심 데이터를 신규 DB로 이관합니다.
+      <b>"한 번에 통째로 옮기는 Big Bang"</b>이 아닌, 검증 가능한 단위로 쪼개어 이관 → 비교 → 보정을 반복합니다.
+    </div>
+
+    <h3>주 단위 실행 계획</h3>
+    <div class="weekly">
+      <div class="wk">
+        <div class="wk-label">Week 3 · 이관 준비 · 마스터</div>
+        <ul>
+          <li>WORK DB 구축 (청주김안과 전용 인스턴스)</li>
+          <li>비쥬웍스가 유사 DB에서 검증한 커버링 인덱스 구성을 출발점으로 적용</li>
+          <li>코드 테이블 이관 (보험사 · 내원동기 · 직원 · 부서)</li>
+          <li>코드 체계 정합화 (예: 보험사 <span class="code-inline">INS00X</span> vs <span class="code-inline">0X</span> 통일)</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">Week 4 · 고객 · 예약 · 수술</div>
+        <ul>
+          <li>CUSTOM 40+ 컬럼 이관 + 암호화 필드 재암호화</li>
+          <li>예약 · 수술 · 검사 이력 이관</li>
+          <li>샘플링 교차 검증 (레거시 ↔ 신규 DB)</li>
+          <li>k6 시나리오로 이관 후 p95 latency 측정</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">Week 5 · 메모 · SMS · 검증</div>
+        <ul>
+          <li>CUSTOM_MEMO (RTF) 이관 + 구조화 필드 병행 저장</li>
+          <li>SMS 이력 <span class="code-inline">MsgSndLst</span> 이관 (더미 레코드 필터링)</li>
+          <li>건수·합계·샘플 3종 전수 검증 리포트 작성</li>
+          <li>실패 레코드 별도 보관 및 원인 기록</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deliv-risk">
+      <div class="dr-box deliv">
+        <div class="dr-label">SUCCESS CRITERIA · 산출물</div>
+        <ul>
+          <li>이관 검증 리포트 (레코드 건수 · 합계 · 샘플 일치율)</li>
+          <li>실패 레코드 목록 및 원인·조치 기록</li>
+          <li>이관 후 p95 latency 측정 리포트 (k6)</li>
+          <li>WORK DB 백업 스냅샷</li>
+        </ul>
+      </div>
+      <div class="dr-box risk">
+        <div class="dr-label">주요 리스크</div>
+        <ul>
+          <li>RTF 메모의 구조 불일치로 일부 레코드 수기 정제 필요</li>
+          <li>장기 누적 데이터의 NULL·공백·인코딩 문제</li>
+          <li>이관 중 진료 업무 영향 최소화 위해 야간/주말 작업 필요</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="owner-row">
+      <span class="owner-tag">담당: DB 엔지니어</span>
+      <span class="owner-tag">담당: 백엔드 엔지니어</span>
+      <span class="owner-tag">협조: 청주김안과 IT 담당</span>
+    </div>
+  </div>
+
+  <!-- ============ Phase 3 ============ -->
+  <div class="phase p3">
+    <div class="phase-head">
+      <span class="phase-num">[PHASE 3]</span>
+      <span class="phase-title">⚙ 커스터마이징</span>
+      <span class="phase-week">W6 ~ W9 · 4주</span>
+    </div>
+    <div class="phase-goal">
+      청주김안과 고유의 검사 항목 · 상담 양식 · 리콜 정책 · 진료 흐름을 시스템에 반영합니다.
+      비쥬웍스의 <b>Route / Service / Schema 3레이어 표준</b> 덕분에, 커스터마이징도 일관된 구조 안에서 진행되어 유지보수가 쉽습니다.
+    </div>
+
+    <h3>주 단위 실행 계획</h3>
+    <div class="weekly">
+      <div class="wk">
+        <div class="wk-label">Week 6 · 검사 · 상담 양식</div>
+        <ul>
+          <li>병원 전용 검사 항목 필드 반영 (LOOCUS 연동 준비)</li>
+          <li>상담 양식 템플릿 제작 (진료과목별)</li>
+          <li>고객 단일뷰 레이아웃 조정</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">Week 7 · 리콜 · 내원동기</div>
+        <ul>
+          <li>리콜 정책 설정 (수술 후 주기, AS 회차 규칙)</li>
+          <li>내원동기 분류 체계 반영</li>
+          <li>소개 고객 관리 플로우 적용</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">Week 8 · 권한 · 보안</div>
+        <ul>
+          <li>RBAC 권한 매트릭스 적용 (직원별 허용 화면)</li>
+          <li>ECP_Auth 계정 생성 · 초기 비밀번호 정책 설정</li>
+          <li>Login_History · 단일 세션 정책 활성화</li>
+          <li>감사 로그(Audit) 기준 확정</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">Week 9 · 통계 · 리포트</div>
+        <ul>
+          <li>병원 요구 통계 대시보드 설정 (매출·수술·전환율)</li>
+          <li>인쇄 양식 커스터마이징 (진단서·동의서 등)</li>
+          <li>통합 테스트 (E2E) — 주요 업무 시나리오 전수 점검</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deliv-risk">
+      <div class="dr-box deliv">
+        <div class="dr-label">SUCCESS CRITERIA · 산출물</div>
+        <ul>
+          <li>맞춤 설정서 (검사 항목 · 상담 양식 · 리콜 정책)</li>
+          <li>RBAC 권한 매트릭스 확정본</li>
+          <li>E2E 테스트 결과 리포트</li>
+          <li>인쇄 양식 샘플 출력물</li>
+        </ul>
+      </div>
+      <div class="dr-box risk">
+        <div class="dr-label">주요 리스크</div>
+        <ul>
+          <li>요구사항 추가 발생 시 일정 지연 (변경 관리 절차 필요)</li>
+          <li>기존 업무 흐름과 신규 화면의 차이로 사용자 저항</li>
+          <li>장비 연동 일정이 외부 업체 스케줄에 의존</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="owner-row">
+      <span class="owner-tag">담당: 비쥬웍스 PM</span>
+      <span class="owner-tag">담당: 프론트 엔지니어</span>
+      <span class="owner-tag">담당: 백엔드 엔지니어</span>
+      <span class="owner-tag">협조: 실장님 · 상담팀</span>
+    </div>
+  </div>
+
+  <!-- ============ Phase 4 ============ -->
+  <div class="phase p4">
+    <div class="phase-head">
+      <span class="phase-num">[PHASE 4]</span>
+      <span class="phase-title">🧪 파일럿 운영</span>
+      <span class="phase-week">W10 ~ W11 · 2주</span>
+    </div>
+    <div class="phase-goal">
+      일부 팀(예: 상담팀 또는 데스크 1곳)을 대상으로 <b>병행 운영</b>을 진행합니다.
+      기존 시스템과 신규 시스템을 동시에 쓰며 비교·검증하고, 발견된 이슈는 즉시 반영합니다.
+      이 단계의 목적은 <b>"완벽한 시스템"이 아니라 "안전한 전환"</b>입니다.
+    </div>
+
+    <h3>주 단위 실행 계획</h3>
+    <div class="weekly">
+      <div class="wk">
+        <div class="wk-label">Week 10 · 파일럿 시작</div>
+        <ul>
+          <li>파일럿 팀 사전 교육 (반일 집중 교육)</li>
+          <li>기존 ↔ 신규 병행 운영 시작</li>
+          <li>일일 피드백 세션 (매일 15분)</li>
+          <li>실시간 이슈 트래킹 (비쥬웍스 담당자 상주)</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">Week 11 · 안정화</div>
+        <ul>
+          <li>수집된 이슈 우선순위별 긴급 패치</li>
+          <li>성능 재측정 (k6 · smoke 테스트)</li>
+          <li>안정성 기준 충족 여부 판정 (Go/No-Go)</li>
+          <li>전 직원 교육 일정 확정</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Go / No-Go 판정 기준</h3>
+    <div class="weekly" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))">
+      <div class="wk">
+        <div class="wk-label">안정성</div>
+        <ul>
+          <li>Critical 버그 0건</li>
+          <li>p95 latency 목표 충족</li>
+          <li>데이터 정합성 100%</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">사용성</div>
+        <ul>
+          <li>파일럿 팀 만족도 설문 통과</li>
+          <li>주요 업무 소요시간 측정</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">운영 준비</div>
+        <ul>
+          <li>교육 자료 완성</li>
+          <li>롤백 절차 문서화</li>
+          <li>상주 지원 일정 확정</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deliv-risk">
+      <div class="dr-box deliv">
+        <div class="dr-label">SUCCESS CRITERIA · 산출물</div>
+        <ul>
+          <li>안정화 체크리스트 (Go/No-Go 판정본)</li>
+          <li>파일럿 이슈 로그 및 조치 기록</li>
+          <li>파일럿 팀 만족도 설문 결과</li>
+          <li>전 직원 교육 자료 (매뉴얼 · 동영상)</li>
+        </ul>
+      </div>
+      <div class="dr-box risk">
+        <div class="dr-label">주요 리스크</div>
+        <ul>
+          <li>병행 입력으로 인한 일시적 업무 부하</li>
+          <li>파일럿 인원의 피드백 편향 (모든 업무 유형 커버 필요)</li>
+          <li>Go 판정 실패 시 Phase 3으로 부분 회귀 필요</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="owner-row">
+      <span class="owner-tag">담당: 비쥬웍스 PM (상주)</span>
+      <span class="owner-tag">담당: 긴급 패치 개발자</span>
+      <span class="owner-tag">협조: 파일럿 팀</span>
+    </div>
+  </div>
+
+  <!-- ============ Phase 5 ============ -->
+  <div class="phase p5">
+    <div class="phase-head">
+      <span class="phase-num">[PHASE 5]</span>
+      <span class="phase-title">🚀 전면 오픈</span>
+      <span class="phase-week">W12 · 1주 (이후 상시 지원)</span>
+    </div>
+    <div class="phase-goal">
+      전 직원을 신규 시스템으로 전환합니다. W12 1주간은 <b>비쥬웍스 담당자가 원내 상주</b>하며 즉각 대응하고,
+      이후에는 정기 유지보수와 월간 점검으로 전환합니다.
+    </div>
+
+    <h3>주 단위 실행 계획</h3>
+    <div class="weekly">
+      <div class="wk">
+        <div class="wk-label">W12 전반 · D-day 전환</div>
+        <ul>
+          <li>전 직원 집중 교육 (3시간 × 2회)</li>
+          <li>D-day 전일 백업 확보</li>
+          <li>레거시 시스템 읽기 전용 전환 (조회만 가능)</li>
+          <li>전환 당일 비쥬웍스 전원 원내 상주</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">W12 후반 · 집중 지원</div>
+        <ul>
+          <li>비쥬웍스 PM · 개발자 원내 상주 (매일)</li>
+          <li>Daily 이슈 브리핑 (10분)</li>
+          <li>긴급 이슈 당일 패치 SLA</li>
+        </ul>
+      </div>
+      <div class="wk">
+        <div class="wk-label">W13 이후 · 정기 운영</div>
+        <ul>
+          <li>원격 지원 전환 (평일 09~18시)</li>
+          <li>월간 점검 리포트 (성능 · 로그 · 개선사항)</li>
+          <li>분기별 기능 업데이트 협의</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deliv-risk">
+      <div class="dr-box deliv">
+        <div class="dr-label">SUCCESS CRITERIA · 산출물</div>
+        <ul>
+          <li>전 직원 교육 이수 명부</li>
+          <li>운영 매뉴얼 (인쇄본 + 웹)</li>
+          <li>지원 체계 SLA 문서</li>
+          <li>월간 점검 리포트 템플릿</li>
+        </ul>
+      </div>
+      <div class="dr-box risk">
+        <div class="dr-label">주요 리스크</div>
+        <ul>
+          <li>전환 직후 업무 속도 일시 저하 (학습 곡선)</li>
+          <li>레거시 데이터 조회 요구 발생 시 대응 절차 필요</li>
+          <li>의료 성수기와 전환 일정 충돌 회피</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="owner-row">
+      <span class="owner-tag">담당: 비쥬웍스 PM</span>
+      <span class="owner-tag">담당: 상주 엔지니어</span>
+      <span class="owner-tag">협조: 청주김안과 전 직원</span>
+    </div>
+  </div>
+
+  <!-- ============ 전체 요약표 ============ -->
+  <h2>Phase 요약표</h2>
+  <div class="card">
+    <table class="summary-tbl">
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>기간</th>
+          <th>핵심 목표</th>
+          <th>주요 산출물</th>
+          <th>Go 판정 기준</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1. 현황 분석</td>
+          <td>W1~W2 · 2주</td>
+          <td>DB 구조 · 요구사항 확정</td>
+          <td>RFP · 스키마 분석 · 리스크 등록부</td>
+          <td>원장님 RFP 승인</td>
+        </tr>
+        <tr>
+          <td>2. 데이터 이관</td>
+          <td>W3~W5 · 3주</td>
+          <td>고객·예약·수술·메모·SMS 이관</td>
+          <td>이관 검증 리포트 · 실패 로그</td>
+          <td>전수 검증 일치율 ≥ 목표치</td>
+        </tr>
+        <tr>
+          <td>3. 커스터마이징</td>
+          <td>W6~W9 · 4주</td>
+          <td>병원 전용 양식·정책·권한 반영</td>
+          <td>맞춤 설정서 · E2E 테스트 · RBAC 매트릭스</td>
+          <td>E2E 시나리오 통과</td>
+        </tr>
+        <tr>
+          <td>4. 파일럿</td>
+          <td>W10~W11 · 2주</td>
+          <td>병행 운영으로 안정성 검증</td>
+          <td>안정화 체크리스트 · 교육 자료</td>
+          <td>Critical 0건 + 만족도 통과</td>
+        </tr>
+        <tr>
+          <td>5. 전면 오픈</td>
+          <td>W12 · 1주</td>
+          <td>전환 및 안정 운영</td>
+          <td>운영 매뉴얼 · SLA · 월간 리포트</td>
+          <td>W12 무중단 운영</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ 비쥬웍스 관점 ============ -->
+  <h2>왜 이 일정이 현실적인가</h2>
+  <div class="card">
+    <div class="card-title">★ 비쥬웍스의 운영 자산이 일정을 뒷받침합니다</div>
+    <ul class="bullet" style="margin-top:12px">
+      <li><b>DB 이관 리스크가 낮음</b> — 비쥬웍스는 동일 계열 S-CRM DB 구조를 이미 운영 중이며, 커버링 인덱스 6종의 효과를 <a href="foundation.html" style="color:#22c55e">실측</a>으로 검증해 두었습니다.</li>
+      <li><b>커스터마이징이 구조화되어 있음</b> — Route/Service/Schema 3레이어 표준(82 라우트 · 31 서비스)은 병원별 변경을 예측 가능한 범위에서 처리합니다.</li>
+      <li><b>파일럿 단계의 Go/No-Go 기준이 명확함</b> — k6·smoke 테스트, Login_History, requestLogger 체계가 <b>주관이 아닌 수치로</b> 안정성을 판정합니다.</li>
+      <li><b>롤백 전략이 존재</b> — 레거시 시스템을 즉시 폐기하지 않고 <b>읽기 전용으로 병행 보존</b>하여 비상시 조회가 가능합니다.</li>
+    </ul>
+    <blockquote class="quote">이 로드맵은 "희망 일정"이 아니라 "검증된 자산 위에 세운 일정"입니다.<br>
+    총 12주의 각 단계는 비쥬웍스가 다른 병원에서 이미 수행해 본 작업 단위로 구성되어 있으며, 청주김안과의 규모에 맞추어 현실적으로 설계되었습니다.</blockquote>
+  </div>
+
+  <h2>관련 문서</h2>
+  <div class="card">
+    <ul class="bullet">
+      <li><a href="adoption.html" style="color:#4a9eff">도입 방안</a> — 5단계 개요</li>
+      <li><a href="improvement.html" style="color:#22c55e">비쥬웍스 개선 방안</a> — 8가지 문제 대응</li>
+      <li><a href="foundation.html" style="color:#22c55e">기술적 기반</a> — 일정을 뒷받침하는 엔지니어링 자산</li>
+      <li><a href="analysis.html" style="color:#ef4444">현재 문제 분석</a> — 이관 대상 시스템 진단</li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>

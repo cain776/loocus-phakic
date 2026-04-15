@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>레거시 이슈 체크리스트 — 청주김안과</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .legend { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0 18px; }
+  .lg { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 4px 10px; border-radius: 4px; }
+  .lg.critical { background: #7f1d1d; color: #fecaca; }
+  .lg.high { background: #78350f; color: #fed7aa; }
+  .lg.medium { background: #713f12; color: #fde68a; }
+  .lg.low { background: #1f2937; color: #d1d5db; }
+  body[data-theme="light"] .lg.critical { background: #fee2e2; color: #b91c1c; }
+  body[data-theme="light"] .lg.high { background: #ffedd5; color: #c2410c; }
+  body[data-theme="light"] .lg.medium { background: #fef3c7; color: #a16207; }
+  body[data-theme="light"] .lg.low { background: #e5e7eb; color: #4b5563; }
+
+  .category { background: #161b22; border: 1px solid #222; border-radius: 10px; padding: 22px 26px; margin-bottom: 14px; border-left: 4px solid #4a9eff; }
+  body[data-theme="light"] .category { background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid #4a9eff; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+  .cat-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+  .cat-title { font-size: 16px; font-weight: 800; color: #fff; }
+  body[data-theme="light"] .cat-title { color: #111827; }
+  .cat-count { font-size: 11px; color: #8b92a0; }
+
+  .issue-list { list-style: none; }
+  .issue-list li { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 13px; color: #dfe2e8; line-height: 1.6; border-bottom: 1px dashed #1f2937; }
+  body[data-theme="light"] .issue-list li { color: #1f2937; border-bottom: 1px dashed #e5e7eb; }
+  .issue-list li:last-child { border-bottom: 0; }
+  .sev-mini { display: inline-block; font-size: 9.5px; font-weight: 800; padding: 2px 7px; border-radius: 3px; letter-spacing: .4px; flex-shrink: 0; min-width: 56px; text-align: center; margin-top: 2px; }
+  .sev-mini.critical { background: #7f1d1d; color: #fecaca; }
+  .sev-mini.high { background: #78350f; color: #fed7aa; }
+  .sev-mini.medium { background: #713f12; color: #fde68a; }
+  .sev-mini.low { background: #1f2937; color: #d1d5db; }
+  body[data-theme="light"] .sev-mini.critical { background: #fee2e2; color: #b91c1c; }
+  body[data-theme="light"] .sev-mini.high { background: #ffedd5; color: #c2410c; }
+  body[data-theme="light"] .sev-mini.medium { background: #fef3c7; color: #a16207; }
+  body[data-theme="light"] .sev-mini.low { background: #e5e7eb; color: #4b5563; }
+
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 18px 0 10px; }
+  .sum-card { background: #161b22; border: 1px solid #222; border-radius: 10px; padding: 18px 20px; border-top: 3px solid #ef4444; }
+  .sum-card.high { border-top-color: #f59e0b; }
+  .sum-card.medium { border-top-color: #eab308; }
+  .sum-card.low { border-top-color: #6b7280; }
+  body[data-theme="light"] .sum-card { background: #fff; border: 1px solid #e5e7eb; }
+  body[data-theme="light"] .sum-card.high { border-top-color: #f59e0b; }
+  body[data-theme="light"] .sum-card.medium { border-top-color: #eab308; }
+  body[data-theme="light"] .sum-card.low { border-top-color: #9ca3af; }
+  .sum-label { font-size: 11px; color: #8b92a0; letter-spacing: .8px; text-transform: uppercase; }
+  .sum-count { font-size: 30px; font-weight: 800; margin: 4px 0; }
+  .sum-count.c-crit { color: #ef4444; }
+  .sum-count.c-high { color: #f59e0b; }
+  .sum-count.c-mid { color: #eab308; }
+  .sum-count.c-low { color: #9ca3af; }
+  .sum-desc { font-size: 11.5px; color: #8b92a0; line-height: 1.5; }
+  @media (max-width: 1100px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<script>window.CURRENT_PAGE = 'issue-checklist';</script>
+<script src="../assets/layout.js" data-base="../"></script>
+
+<main class="main">
+  <div class="section-badge">CHECKLIST — LEGACY ISSUES</div>
+  <h1>레거시 이슈 체크리스트</h1>
+  <div class="subtitle">
+    성민CRM(C# WinForms) · MD소프트 · 종이차트 혼재 환경의 주요 이슈를 10개 카테고리로 전수 점검합니다.
+    <a href="analysis.html" style="color:#ef4444">현재 문제 분석</a> 페이지의 "72건" 집계 근거입니다.
+  </div>
+  <p style="font-size:11.5px;color:#8b92a0;margin-top:-10px">
+    ※ 본 체크리스트는 비쥬웍스가 다수 안과 병원을 지원하며 관찰한 <b>성민CRM 기반 환경의 공통 패턴</b>을 정리한 것입니다.
+    청주김안과 실제 환경의 세부 사항은 <a href="roadmap.html" style="color:#4a9eff">Phase 1 현황 분석</a>에서 확정합니다.
+  </p>
+
+  <div class="legend">
+    <span class="lg critical">Critical — 즉시 해결</span>
+    <span class="lg high">High — 단기 개선</span>
+    <span class="lg medium">Medium — 중기 개선</span>
+    <span class="lg low">Low — 장기 개선</span>
+  </div>
+
+  <!-- 1. 아키텍처 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">1. 아키텍처 · 플랫폼</div>
+      <div class="cat-count">8건 · Critical 2 · High 3 · Medium 2 · Low 1</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>Windows PC 전용</b> — C# WinForms 기반, Mac · 태블릿 · 모바일 불가</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>Fat Client 구조</b> — 비즈니스 로직이 클라이언트에 분산되어 버전 불일치 발생</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>배포 = PC마다 수동 재설치</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>원격 · 재택 근무 불가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>모놀리식 EXE — 일부 장애가 전체 프로그램 중단으로 확산</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>.NET Framework 버전 종속 — OS/런타임 업그레이드 리스크</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>CI/CD 부재 — 빌드 · 배포 수동</div></li>
+      <li><span class="sev-mini low">LOW</span><div>코드 저장소 관리 · 브랜치 전략 부재</div></li>
+    </ul>
+  </div>
+
+  <!-- 2. DB · 데이터 무결성 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">2. 데이터베이스 · 데이터 무결성</div>
+      <div class="cat-count">12건 · Critical 3 · High 5 · Medium 3 · Low 1</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>시스템 분산 저장</b> — 3개 시스템 간 데이터 단절</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>이중 입력 강요</b> — 오타 · 누락 발생</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>크로스 DB 하드 결합</b> — Linked Server 의존</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>RTF 메모 저장 — 검색 · 구조화 · 연동 불가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>암호화 필드 패스프레이즈 공유 — 검색 성능 저하</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>코드 체계 불일치 (보험사 · 직원 · 내원동기)</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>SMS 이력 단일 테이블 수백만 건 규모 — 파티셔닝 없음</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>사용 중단된 레거시 테이블 잔존</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>MSSQL 유료 라이선스 지속 부담</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>T-SQL 저장 프로시저 비대화 — 단위 테스트 불가</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>공백/NULL 일관성 부재로 조회 불일치</div></li>
+      <li><span class="sev-mini low">LOW</span><div>백업 · 복구 자동화 미흡</div></li>
+    </ul>
+  </div>
+
+  <!-- 3. 성능 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">3. 성능 · 확장성</div>
+      <div class="cat-count">7건 · Critical 1 · High 3 · Medium 2 · Low 1</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>핵심 쿼리 p95 1.75~14초</b> — 저희가 같은 DB에서 측정·개선한 수치 (<a href="foundation.html" style="color:#22c55e">foundation</a> 참조)</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>인덱스 전략 부재 — 현장에서 수동 추가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>수평 확장 불가 — 단일 MSSQL 인스턴스 부하 집중</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>성능 측정 문화 부재 — p95/p99 지표 없음</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>캐싱 전략 없음</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>Slow Query 모니터링 부재</div></li>
+      <li><span class="sev-mini low">LOW</span><div>성능 베이스라인 미확보</div></li>
+    </ul>
+  </div>
+
+  <!-- 4. 보안 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">4. 보안 · 컴플라이언스 (의료 데이터)</div>
+      <div class="cat-count">11건 · Critical 3 · High 5 · Medium 2 · Low 1</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>하드코딩된 DB 접속 정보</b> — 소스에 평문 저장</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>RBAC 세분화 부족</b> — 사실상 전원 동일 권한</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>감사 로그(Audit) 부재</b> — 조회 · 수정 이력 추적 불가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>비밀번호 정책 미흡 (해시 · 복잡도 · 만료)</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>단일 세션 정책 없음 — 책임 추적 곤란</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>세션 타임아웃 부재</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>주민번호 암호화 키 공유 취약</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>HTTPS/TLS 강제 부재</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>개인정보 대량 조회 임계 알림 없음</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>개인정보보호법 · 의료법 로그 보존 요건 충족 곤란</div></li>
+      <li><span class="sev-mini low">LOW</span><div>의존 라이브러리 취약점 스캐닝 부재</div></li>
+    </ul>
+  </div>
+
+  <!-- 5. UX -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">5. 사용자 경험 (UX)</div>
+      <div class="cat-count">8건 · High 4 · Medium 3 · Low 1</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini high">HIGH</span><div>고정 레이아웃 — 병원/역할별 커스터마이징 불가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>다국어 지원 부재</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>검색 기능 취약 — Fuzzy/부분 검색 불가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>화면 전환 다수 — 환자 1명 조회에 여러 창 이동</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>단축키 · 접근성 미흡</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>반응형 UI 불가 — 해상도 고정</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>인쇄 양식 변경이 개발 작업</div></li>
+      <li><span class="sev-mini low">LOW</span><div>다크모드 등 현대적 UX 패턴 미적용</div></li>
+    </ul>
+  </div>
+
+  <!-- 6. 통합 · 확장성 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">6. 통합 · 확장성</div>
+      <div class="cat-count">7건 · Critical 2 · High 3 · Medium 2</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>검사장비 수기 입력</b> — 시력 · 굴절 · 안압 · OCT 수기 전사</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>CTI 콜센터 미연동</b> — 전화 수신 시 고객 자동 조회 불가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>SMS/알림 채널 제한 — 카카오톡 · 이메일 · 푸시 부재</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>외부 API 연동 어려움</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>신규 장비 · 서비스 추가 = 유상 커스텀 개발</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>Webhook / 이벤트 발행 부재</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>리포트 포맷 고정</div></li>
+    </ul>
+  </div>
+
+  <!-- 7. 운영 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">7. 운영 · 유지보수</div>
+      <div class="cat-count">8건 · Critical 2 · High 3 · Medium 2 · Low 1</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>단일 창구 부재</b> — 시스템마다 별도 업체 · 별도 계약</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>장애 대응 지연</b> — 어느 시스템 원인인지 판단에만 시간 소요</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>관측성 부재 — 중앙 로그 · 메트릭 없음, 사용자 제보로만 인지</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>테스트 자동화 부재 — 배포 리스크 높음</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>롤백 전략 없음</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>장애 이력 DB 없음 — 동일 이슈 반복</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>업무 매뉴얼 구버전 — 온보딩 곤란</div></li>
+      <li><span class="sev-mini low">LOW</span><div>성능 베이스라인 없음 — "느려졌다" 정량 측정 불가</div></li>
+    </ul>
+  </div>
+
+  <!-- 8. 비즈니스 연속성 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">8. 비즈니스 연속성 · 리스크</div>
+      <div class="cat-count">6건 · Critical 2 · High 2 · Medium 2</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>개발 인력 수급</b> — C# WinForms + T-SQL 전문가 확보 난이도 상승</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>기술 스택 노후화</b> — 신규 인력 선호도 낮음</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>벤더 락인 — 특정 업체 의존</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>MSSQL 라이선스 비용 지속 증가</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>문서화 부재 — 특정 개발자 기억 의존</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>장기 누적 데이터 이관 난이도</div></li>
+    </ul>
+  </div>
+
+  <!-- 9. AI/AX -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">9. AI/AX 관점의 구조적 한계</div>
+      <div class="cat-count">7건 · Critical 2 · High 3 · Medium 2</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>데이터 정제 파이프라인 없음</b> — AI 학습 데이터셋 구축 불가</div></li>
+      <li><span class="sev-mini critical">CRITICAL</span><div><b>Vector Search 불가</b> — 유사도 검색 · 임베딩 저장 어려움</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>LLM API 레이어 없음 — Fat Client에서 직접 호출 시 키 유출 리스크</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>실시간 스트리밍 UI 불가</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>JSONB/반구조 데이터 저장 불가</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>이벤트 기반 아키텍처 부재 — AI Agent Tool Call 연계 어려움</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>로그 수집 체계 없음 — 이상 감지 · 드리프트 탐지 불가</div></li>
+    </ul>
+  </div>
+
+  <!-- 10. 문서 · 지식 -->
+  <div class="category">
+    <div class="cat-head">
+      <div class="cat-title">10. 문서 · 지식 자산</div>
+      <div class="cat-count">5건 · High 2 · Medium 2 · Low 1</div>
+    </div>
+    <ul class="issue-list">
+      <li><span class="sev-mini high">HIGH</span><div>ERD 문서 부재 — 스키마 변경 영향 분석이 기억에 의존</div></li>
+      <li><span class="sev-mini high">HIGH</span><div>API 명세 · 연동 인터페이스 문서화 미흡</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>운영 매뉴얼 신규 직원 대상 부재</div></li>
+      <li><span class="sev-mini medium">MEDIUM</span><div>코드 표준 문서 부재</div></li>
+      <li><span class="sev-mini low">LOW</span><div>의사결정 이력(ADR) 미관리</div></li>
+    </ul>
+  </div>
+
+  <!-- 집계 -->
+  <h2>우선순위 집계</h2>
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sum-label">CRITICAL</div>
+      <div class="sum-count c-crit">17</div>
+      <div class="sum-desc">Windows 전용, 이중입력, 검색 성능, RBAC, 감사로그, 검사장비 수기, 단일창구 부재 등</div>
+    </div>
+    <div class="sum-card high">
+      <div class="sum-label">HIGH</div>
+      <div class="sum-count c-high">33</div>
+      <div class="sum-desc">배포 수동, RTF 메모, 인덱스 부재, 단일 세션 없음, 관측성 없음, 문서 미흡 등</div>
+    </div>
+    <div class="sum-card medium">
+      <div class="sum-label">MEDIUM</div>
+      <div class="sum-count c-mid">22</div>
+      <div class="sum-desc">캐싱, CI/CD, 다국어, Webhook, 장애 이력 DB, 이벤트 아키텍처 등</div>
+    </div>
+    <div class="sum-card low">
+      <div class="sum-label">LOW</div>
+      <div class="sum-count c-low">7</div>
+      <div class="sum-desc">다크모드, 의존성 스캐닝, 성능 베이스라인, 브랜치 전략, ADR 등</div>
+    </div>
+  </div>
+  <p style="font-size:12.5px;color:#8b92a0;margin-top:10px">
+    총 <b>79건</b> — 10개 카테고리 전수 점검 결과. 등급은 비쥬웍스가 유사 환경에서 경험한 영향도를 기준으로 분류했습니다.
+    실제 청주김안과 환경의 확정 평가는 <a href="roadmap.html" style="color:#4a9eff">Phase 1 현황 분석</a>에서 조정합니다.
+  </p>
+
+  <h2>관련 문서</h2>
+  <div class="card">
+    <ul class="bullet">
+      <li><a href="analysis.html" style="color:#ef4444">현재 문제 분석</a> — 상위 8개 문제 상세 서술</li>
+      <li><a href="improvement.html" style="color:#22c55e">비쥬웍스 개선 방안</a> — 문제별 해결 매핑</li>
+      <li><a href="roadmap.html" style="color:#4a9eff">도입 로드맵</a> — 12주 실행 계획</li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>

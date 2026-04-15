@@ -1,0 +1,75 @@
+  <!-- 12: VISION 구성도 -->
+  <section class="slide">
+    <div class="s-badge">ARCHITECTURE</div>
+    <div class="s-h2">LOOCUS VISION 시스템 구성도</div>
+    <div class="s-lead">병원 내 Agent + 클라우드 VISION/INSIGHT</div>
+    <div class="arch-wrap" style="grid-template-columns: 1.7fr 40px 1fr;align-items:stretch">
+      <div class="arch-box" style="display:grid;grid-template-columns:110px 30px 1.2fr;gap:14px;align-items:stretch;padding:22px 20px;position:relative;overflow:visible">
+      <div style="display:flex;flex-direction:column;justify-content:space-between;gap:10px;position:relative;padding:6px 0">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="arch-pill">CRM</div>
+          <div class="arch-pill">EMR</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:40px">🧑‍⚕️</div>
+          <div style="font-size:11px;color:#8b92a0;font-weight:700;margin-top:2px">병원 상담사</div>
+        </div>
+      </div>
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;z-index:5">
+        <svg width="30" height="100%" viewBox="0 0 30 200" preserveAspectRatio="none" style="position:absolute;inset:0">
+          <path d="M 0 50 L 15 50 L 15 100 L 28 100" stroke="#4a9eff" stroke-width="2" fill="none"/>
+          <path d="M 0 150 L 15 150 L 15 100 L 28 100" stroke="#4a9eff" stroke-width="2" fill="none"/>
+          <polygon points="28,95 28,105 34,100" fill="#4a9eff"/>
+        </svg>
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:999px;background:#10b981;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:20">1</div>
+      </div>
+      <div class="arch-inner">
+        <div class="arch-title"><b>LOOCUS</b> Agent</div>
+        <div style="display:grid;grid-template-columns:1fr 60px 1fr;gap:14px;align-items:stretch">
+          <div class="arch-sub">
+            <div class="arch-sub-title">Agent Server</div>
+            <div class="arch-item">병원 DB 데이터 자동 연동</div>
+            <div class="arch-item">LOOCUS CLOUD 통신</div>
+          </div>
+          <div style="text-align:center;font-size:10.5px;color:#8b92a0;line-height:1.6;align-self:center">
+            <div>데이터 저장</div>
+            <div style="color:#4a9eff;font-size:14px">⇄</div>
+            <div>데이터 로드</div>
+          </div>
+          <div class="arch-sub" style="position:relative">
+            <div class="arch-num" style="left:-11px;top:-11px">2</div>
+            <div class="arch-sub-title">Agent DB</div>
+            <div class="arch-item">정제된 의료 데이터</div>
+            <div class="arch-item">AI 모델 결과</div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="arch-connector" style="flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:2px"><div style="width:22px;height:2px;background:#10b981"></div><div style="width:0;height:0;border-left:8px solid #10b981;border-top:5px solid transparent;border-bottom:5px solid transparent"></div></div>
+        <div style="display:flex;align-items:center;gap:2px"><div style="width:0;height:0;border-right:8px solid #10b981;border-top:5px solid transparent;border-bottom:5px solid transparent"></div><div style="width:22px;height:2px;background:#10b981"></div></div>
+      </div>
+      <div class="arch-box" style="position:relative">
+        <div class="arch-num" style="left:14px;top:14px">3</div>
+        <div class="arch-title"><b>LOOCUS</b> VISION/INSIGHT</div>
+        <div class="arch-row" style="grid-template-columns:1fr 24px 1fr;align-items:stretch">
+          <div class="arch-sub">
+            <div class="arch-sub-title" style="color:#4a9eff">LOOCUS VISION</div>
+            <div class="arch-item">검안데이터 기반<br>시력교정술 AI 모델 추천</div>
+            <div class="arch-item">렌즈 삽입술 예후<br>AI 모델 예측</div>
+          </div>
+          <div style="text-align:center;font-size:16px;color:#8b92a0;align-self:center">↔</div>
+          <div class="arch-sub">
+            <div class="arch-sub-title" style="color:#a855f7">LOOCUS INSIGHT</div>
+            <div class="arch-item" style="background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.25)">환자 검안데이터 시각화</div>
+            <div class="arch-item" style="background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.25)">수술 설명 자료</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="arch-legend">
+      <div class="leg-item"><div class="leg-num">1</div><div>병원 CRM &amp; EMR 연동으로 서비스 데이터 자동 추출</div></div>
+      <div class="leg-item"><div class="leg-num">2</div><div>병원 내의 서버에 DB를 구축함으로써 의료 데이터 외부 유출 방지, LOOCUS VISION 데이터 전송 시 암호화로 데이터 보호</div></div>
+      <div class="leg-item"><div class="leg-num">3</div><div>클라우드 기반 서버 운용으로 확장성 및 안정성 확보</div></div>
+    </div>
+  </section>

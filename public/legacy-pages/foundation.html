@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>기술적 기반 (Technical Foundation) — 청주김안과</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .ascii { background: #0f1419; border: 1px solid #222; border-radius: 6px; padding: 18px; font-family: 'Consolas', monospace; font-size: 12.5px; color: #4a9eff; white-space: pre; overflow-x: auto; margin: 14px 0; }
+  body[data-theme="light"] .ascii { background: #f9fafb; border-color: #e5e7eb; color: #2563eb; }
+  .highlight-box { background: linear-gradient(135deg, #1e3a5f 0%, #14532d 100%); border-radius: 8px; padding: 22px; margin-top: 18px; }
+  body[data-theme="light"] .highlight-box { background: linear-gradient(135deg, #dbeafe 0%, #dcfce7 100%); }
+  .highlight-box p { color: #e4e6eb; font-size: 14px; line-height: 1.7; }
+  body[data-theme="light"] .highlight-box p { color: #1f2937; }
+  .strength-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+  .strength { background: #161b22; border: 1px solid #222; border-top: 3px solid #22c55e; border-radius: 8px; padding: 22px; }
+  body[data-theme="light"] .strength { background: #fff; border: 1px solid #e5e7eb; border-top: 3px solid #22c55e; }
+  .strength-icon { font-size: 22px; margin-bottom: 8px; }
+  .strength-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #22c55e; }
+  .strength-desc { font-size: 13px; color: #dfe2e8; line-height: 1.6; }
+  body[data-theme="light"] .strength-desc { color: #1f2937; }
+  @media (max-width: 1100px) { .strength-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<script>window.CURRENT_PAGE = 'foundation';</script>
+<script src="../assets/layout.js" data-base="../"></script>
+
+<main class="main">
+  <div class="section-badge">SECTION — TECHNICAL FOUNDATION</div>
+  <h1>기술적 기반 (Foundation)</h1>
+  <div class="subtitle">청주김안과에 도입될 시스템은 <b>표준화된 아키텍처</b>, <b>검증된 DB 성능</b>, <b>체계적인 관측 체계</b> 위에서 운영되고 있습니다.</div>
+
+  <div class="highlight-box">
+    <p>✦ 제안드리는 시스템은 <b>AX(AI Transformation)를 즉시 시작할 수 있는 수준의 엔지니어링 기반</b>을 이미 확보하고 있습니다.<br>
+    코드 표준화, 성능 측정 문화, 보안 미들웨어 체계 — 이 세 가지는 하루아침에 만들 수 없는 자산이며, 수년간의 운영 경험을 통해 축적해 온 결과물입니다.</p>
+  </div>
+
+  <div class="strength-grid">
+    <div class="strength">
+      <div class="strength-icon">◉</div>
+      <div class="strength-title">표준화된 아키텍처</div>
+      <div class="strength-desc">Route / Service / Schema 3레이어 패턴을 전사 표준으로 정착. 31개 서비스 모듈이 일관된 규칙으로 분리되어 있습니다.</div>
+    </div>
+    <div class="strength">
+      <div class="strength-icon">⚡</div>
+      <div class="strength-title">실측된 DB 성능</div>
+      <div class="strength-desc">커버링 인덱스 적용으로 핵심 쿼리 p95를 <b>최대 89%</b> 단축. 모든 성능 개선은 k6 기반 정량 측정으로 검증합니다.</div>
+    </div>
+    <div class="strength">
+      <div class="strength-icon">🔍</div>
+      <div class="strength-title">요청 단위 추적 체계</div>
+      <div class="strength-desc">requestLogger + reqId 컨텍스트로 모든 요청을 사용자·세션 단위로 추적. 장애 원인을 즉시 파악할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <!-- 1. 아키텍처 -->
+  <h2 id="sec-arch">1. 표준화된 아키텍처</h2>
+
+  <div class="card">
+    <div class="card-title">◉ 일관된 3레이어 패턴</div>
+    <p class="desc">모든 신규 기능은 <b>Route → Service → Schema</b> 3레이어 패턴으로 개발됩니다. 이 규칙이 CLAUDE.md에 명문화되어 있어, 어떤 개발자가 합류해도 동일한 구조로 코드를 작성합니다.</p>
+    <div class="ascii">routes/{name}.js  →  services/{name}-service.js  →  schemas/{name}.schema.js
+    HTTP 계층              비즈니스 로직                      입력 검증(Zod)</div>
+    <div class="sub">현재 규모</div>
+    <ul class="bullet">
+      <li><b>라우트 82개</b> (<code>routes/*.js</code>) — HTTP 엔드포인트</li>
+      <li><b>Service 레이어 31개</b> (<code>services/*.js</code>) — 비즈니스 로직 캡슐화</li>
+      <li><b>Zod 스키마 77개</b> (<code>schemas/*.js</code>) — 입력 검증 자동화</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">◉ 도메인별 서비스 분리</div>
+    <p class="desc">복잡한 도메인은 단일 서비스가 아니라 <b>역할별 세부 모듈</b>로 분리되어 있습니다. 이 구조 덕분에 향후 MSA 전환 시 프로세스 경계로 그대로 승격할 수 있습니다.</p>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title blue">인증 도메인</div>
+        <ul>
+          <li><code>auth-verify.js</code> — 인증 로직</li>
+          <li><code>password-store.js</code> — 비밀번호 관리</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <div class="col-title blue">Agent Office</div>
+        <ul>
+          <li><code>agent-office-service.js</code> — 메인 로직</li>
+          <li><code>agent-office-data.js</code> — 데이터 액세스</li>
+          <li><code>agent-office-emitter.js</code> — 이벤트 방출</li>
+        </ul>
+      </div>
+      <div class="col-box" style="grid-column: 1 / -1;">
+        <div class="col-title blue">Customer 도메인 (7개 서비스)</div>
+        <ul>
+          <li><code>customer-read</code> / <code>customer-write</code> / <code>customer-response</code> / <code>customer-response-write</code></li>
+          <li><code>customer-etc-panels</code> / <code>customer-sms</code> / <code>customer-visit-motive</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">◉ 체계적인 미들웨어 파이프라인</div>
+    <p class="desc">모든 요청은 <b>보안 → 세션 → 로깅 → 인증 → 라우팅 → 에러 처리</b>의 일관된 파이프라인을 통과합니다. 이 체계는 OWASP 권고안을 기반으로 설계되었습니다.</p>
+    <div class="ascii">helmet → cors → json → responseHandler → sessionConfig → requestLogger
+  → 정적파일 → limiter → csrf → requireAuth → 라우트 → globalErrorHandler</div>
+    <div class="effect">✔ 모든 보안 헤더, CSRF, Rate Limit, 세션 검증이 <b>라우트 작성 없이 자동 적용</b>됩니다.</div>
+  </div>
+
+  <!-- 2. DB -->
+  <h2 id="sec-db">2. 검증된 DB 성능</h2>
+
+  <div class="card">
+    <div class="card-title">⚡ 실측 기반 성능 개선</div>
+    <p class="desc">제안 시스템의 DB 성능 개선은 <b>"감"이 아닌 "측정"으로 진행</b>됩니다. 모든 인덱스 적용은 k6 시나리오와 smoke 테스트로 전후 p95 latency를 비교 검증합니다.</p>
+    <div class="sub">WORK DB 커버링 인덱스 성과</div>
+    <table class="tbl">
+      <thead><tr><th>인덱스</th><th>대상 쿼리</th><th>개선 결과 (p95)</th></tr></thead>
+      <tbody>
+        <tr><td><code>IX_CUSTOM_CustName_Covering</code></td><td>고객 이름 검색</td><td><b class="green">1.75s → 465ms (-73%)</b></td></tr>
+        <tr><td><code>IX_MOTIVE_NEW02_fkey_Idx</code></td><td>예약 리콜</td><td><b class="green">7.14s → 764ms (-89%)</b></td></tr>
+        <tr><td><code>IX_CUSTOM_HISTORY_CustNum</code></td><td>고객 이력 조회</td><td><b class="green">3.3s → 0.1s (-97%)</b></td></tr>
+        <tr><td><code>IX_MsgSndLst_Phone_SendDateTime</code></td><td>SMS 이력 조회 (대량 테이블)</td><td><b class="green">7s → 0.5s (-93%)</b></td></tr>
+        <tr><td><code>SP_CUSTOM_MEMO</code> 프로시저 분해</td><td>메모 조회</td><td><b class="green">14s → 0.9s (-94%)</b></td></tr>
+      </tbody>
+    </table>
+    <div class="effect">✔ 상담사와 데스크가 체감하는 <b>"느렸던 화면들"이 평균 80% 이상 빨라진 실적</b>을 확보했습니다.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ 검증 자동화 도구</div>
+    <p class="desc">성능 변경이 일회성에 그치지 않도록, 지속적으로 측정할 수 있는 도구 체계를 갖추고 있습니다.</p>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title blue">k6 부하 시나리오</div>
+        <ul>
+          <li>시나리오 03 ~ 06 — 고객 검색, 리콜 등 핵심 플로우</li>
+          <li>p50/p95/p99 latency 자동 측정</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <div class="col-title blue">Smoke 테스트 5종</div>
+        <ul>
+          <li><code>auth</code> / <code>login-history</code></li>
+          <li><code>customer-all-panels</code> / <code>customer-update</code></li>
+          <li><code>prod-compare</code> — WORK/PROD 응답 비교</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ 멀티 DB 통합 운영</div>
+    <p class="desc">제안 시스템은 <b>SOFTCRM · MCRM · IPLUS</b> 세 개의 DB를 단일 커넥션 풀로 통합 운영합니다. 크로스 DB 쿼리와 Linked Server 연동을 통해 분산 데이터를 매끄럽게 조회합니다.</p>
+    <ul class="bullet">
+      <li>메인 테이블 <code>CUSTOM</code> — 40+ 컬럼, 고객 마스터</li>
+      <li><code>MsgSndLst</code> — 대량 SMS 이력 테이블 (인덱스 최적화 완료)</li>
+      <li><code>CUSTOM_MEMO</code> — RTF 기반 상담 메모</li>
+      <li><code>JUMIN_NUM</code> — <code>DECRYPTBYPASSPHRASE</code> 기반 암호화 저장 (개인정보보호법 준수)</li>
+    </ul>
+    <p style="font-size:11.5px;color:#8b92a0;margin-top:10px">
+      ※ 위 테이블 구조·규모는 비쥬웍스가 운영 중인 S-CRM 계열 DB의 사례이며, 청주김안과의 실제 데이터 규모는 Phase 1 현황 분석에서 확인합니다.
+    </p>
+  </div>
+
+  <!-- 3. 관측성 -->
+  <h2 id="sec-obs">3. 요청 단위 추적 체계</h2>
+
+  <div class="card">
+    <div class="card-title">🔍 구조화된 로깅</div>
+    <p class="desc">모든 요청은 <b>reqId, userId, 세션 컨텍스트</b>가 포함된 구조화된 로그를 자동 생성합니다. 어떤 사용자가 언제 무엇을 했는지 즉시 추적할 수 있습니다.</p>
+    <div class="two-col">
+      <div class="col-box">
+        <div class="col-title blue">winston 기반 로거</div>
+        <ul>
+          <li>카테고리별 로그 레벨 분리</li>
+          <li>에러 스택 트레이스 자동 수집</li>
+          <li>파일 로테이션 지원</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <div class="col-title blue">requestLogger 미들웨어</div>
+        <ul>
+          <li>요청별 <code>reqId</code> 자동 발급</li>
+          <li><code>req.logger</code> 컨텍스트 주입</li>
+          <li>사용자 · 세션 정보 자동 태깅</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 중앙 집중 에러 처리</div>
+    <p class="desc"><code>globalErrorHandler</code>를 통해 모든 예외가 한 곳에서 포착되고 분류됩니다. 개발자는 라우트마다 try/catch를 작성할 필요가 없으며, 에러 응답 포맷은 전사 표준으로 통일되어 있습니다.</p>
+    <div class="effect">✔ 에러 발생 시 <b>reqId 하나로 사용자 요청 → 서비스 호출 → DB 쿼리까지 역추적</b> 가능</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 CLAUDE.md 기반 개발 표준</div>
+    <p class="desc">모든 로깅·에러 처리 규칙이 <b>CLAUDE.md에 문서화</b>되어 있어, 신규 개발자도 첫 PR부터 표준을 따를 수 있습니다. 이 문서는 AI 개발 어시스턴트(Claude Code)도 동일하게 참조합니다.</p>
+  </div>
+
+  <!-- 4. 종합 -->
+  <h2 id="sec-summary">4. 종합: 우리가 준비한 것</h2>
+
+  <div class="card">
+    <table class="tbl">
+      <thead>
+        <tr><th>영역</th><th>확보된 자산</th><th>비즈니스 가치</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>아키텍처</b></td>
+          <td>Route/Service/Schema 3레이어, Service 31개</td>
+          <td>신규 기능 개발 속도 · 유지보수 비용 절감</td>
+        </tr>
+        <tr>
+          <td><b>DB</b></td>
+          <td>멀티 DB 통합 운영, 커버링 인덱스 실측 개선</td>
+          <td>핵심 화면 응답 <b class="green">80% 이상 빠름</b></td>
+        </tr>
+        <tr>
+          <td><b>관측성</b></td>
+          <td>winston 구조 로깅, requestLogger, globalErrorHandler</td>
+          <td>장애 원인 즉시 추적, 평균 대응 시간 단축</td>
+        </tr>
+        <tr>
+          <td><b>개발 규율</b></td>
+          <td>CLAUDE.md 표준, k6/smoke 자동화</td>
+          <td>코드 품질 일관성, AI 협업 개발 가속</td>
+        </tr>
+        <tr>
+          <td><b>AI 연동</b></td>
+          <td>MCP <code>mssql-work</code> 서버 연동</td>
+          <td>AI가 DB를 직접 조회해 업무 자동화 지원</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">★ 왜 이것이 중요한가</div>
+    <p class="desc" style="font-size:14px;">많은 의료 시스템이 "돌아가기만 하면 된다"는 수준에 머무릅니다. 저희가 제안드리는 시스템은 그 이상을 추구합니다:</p>
+    <ul class="bullet" style="margin-top:12px;">
+      <li><b>표준화된 코드</b>는 AI 도구가 읽고 수정할 수 있는 기반이 됩니다.</li>
+      <li><b>측정된 성능</b>은 개선이 실제 개선인지 증명할 수 있게 합니다.</li>
+      <li><b>추적 가능한 요청</b>은 장애가 아닌 "학습 데이터"가 됩니다.</li>
+    </ul>
+    <blockquote class="quote">이 세 가지가 갖춰져 있기에, 청주김안과는 도입 즉시 <b>AX(AI Transformation)의 출발선</b>에 설 수 있습니다.<br>AI 도입은 도구의 문제가 아니라 기반의 문제이며, 저희는 그 기반을 이미 준비해 두었습니다.</blockquote>
+  </div>
+  <div class="closing">표준화된 코드 · 측정된 성능 · 추적 가능한 요청 — 비쥬웍스는 이 세 가지로 시작합니다</div>
+
+  <h2>관련 문서</h2>
+  <div class="card">
+    <ul class="bullet">
+      <li><a href="ax.html" style="color:#4a9eff;">AX 전략</a> — 준비된 기반 위에서 그리는 AI 전환 로드맵</li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>

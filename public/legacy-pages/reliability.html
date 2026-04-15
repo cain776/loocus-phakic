@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>안정성 · 무중단 — 청주김안과</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* 히어로 */
+  .rel-hero {
+    background: linear-gradient(135deg, #1e3a5f 0%, #164e63 100%);
+    border-radius: 12px; padding: 32px 36px; margin: 20px 0 28px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  body[data-theme="light"] .rel-hero { background: linear-gradient(135deg, #dbeafe 0%, #cffafe 100%); }
+  .rel-hero-icon {
+    width: 72px; height: 72px; flex-shrink: 0;
+    border-radius: 50%; background: rgba(255,255,255,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px;
+  }
+  body[data-theme="light"] .rel-hero-icon { background: rgba(255,255,255,.7); }
+  .rel-hero h2 { color: #fff; font-size: 22px; font-weight: 800; margin: 0 0 6px; border: 0; padding: 0; }
+  body[data-theme="light"] .rel-hero h2 { color: #0f172a; }
+  .rel-hero p { color: #bae6fd; font-size: 14px; line-height: 1.65; margin: 0; }
+  body[data-theme="light"] .rel-hero p { color: #155e75; }
+
+  /* 지표 */
+  .rel-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+  .rel-stat {
+    background: #161b22; border: 1px solid #222; border-top: 3px solid #06b6d4;
+    border-radius: 10px; padding: 20px;
+  }
+  body[data-theme="light"] .rel-stat { background: #fff; border: 1px solid #e5e7eb; border-top: 3px solid #06b6d4; }
+  .rel-stat-label { font-size: 11px; color: #8b92a0; letter-spacing: .6px; text-transform: uppercase; }
+  .rel-stat-value { font-size: 26px; font-weight: 800; color: #06b6d4; margin: 4px 0; }
+  .rel-stat-desc { font-size: 12px; color: #8b92a0; line-height: 1.5; }
+  @media (max-width: 1100px) { .rel-stats { grid-template-columns: repeat(2, 1fr); } }
+
+  /* 카드 */
+  .rel-card {
+    background: #161b22; border: 1px solid #222; border-radius: 10px;
+    padding: 24px 28px; margin-bottom: 16px; border-left: 4px solid #06b6d4;
+  }
+  body[data-theme="light"] .rel-card { background: #fff; border: 1px solid #e5e7eb; border-left: 4px solid #06b6d4; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .rel-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rel-num { font-size: 12px; color: #8b92a0; font-weight: 700; letter-spacing: .4px; }
+  .rel-title { font-size: 18px; font-weight: 800; color: #fff; }
+  body[data-theme="light"] .rel-title { color: #111827; }
+  .rel-badge {
+    display: inline-block; font-size: 10.5px; font-weight: 800;
+    padding: 4px 10px; border-radius: 4px; letter-spacing: .4px;
+    background: #164e63; color: #67e8f9;
+  }
+  body[data-theme="light"] .rel-badge { background: #cffafe; color: #0e7490; }
+  .rel-badge.plan { background: #1e3a5f; color: #93c5fd; }
+  body[data-theme="light"] .rel-badge.plan { background: #dbeafe; color: #1d4ed8; }
+
+  .rel-lead { color: #8b92a0; font-size: 13px; margin-bottom: 16px; line-height: 1.6; }
+  body[data-theme="light"] .rel-lead { color: #6b7280; }
+
+  .rel-card h3 { font-size: 12px; color: #06b6d4; margin: 16px 0 8px; letter-spacing: .5px; text-transform: uppercase; font-weight: 700; }
+  body[data-theme="light"] .rel-card h3 { color: #0e7490; }
+  .rel-card ul { list-style: none; }
+  .rel-card ul li { position: relative; padding: 4px 0 4px 22px; font-size: 13.5px; color: #dfe2e8; line-height: 1.65; }
+  body[data-theme="light"] .rel-card ul li { color: #1f2937; }
+  .rel-card ul li::before {
+    content: "◆"; position: absolute; left: 0;
+    color: #06b6d4; font-weight: 800; top: 4px; font-size: 10px;
+  }
+  body[data-theme="light"] .rel-card ul li::before { color: #0891b2; }
+
+  /* 시나리오 */
+  .scenario-box {
+    background: #0f1419; border: 1px solid #1a1f26; border-left: 3px solid #06b6d4;
+    border-radius: 6px; padding: 14px 16px; margin-top: 12px;
+    font-size: 12.5px; color: #dfe2e8; line-height: 1.65;
+  }
+  body[data-theme="light"] .scenario-box { background: #f0fdfa; border-color: #cffafe; border-left-color: #0891b2; color: #1f2937; }
+  .scenario-box .label { font-size: 10.5px; font-weight: 800; color: #06b6d4; letter-spacing: .5px; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  body[data-theme="light"] .scenario-box .label { color: #0e7490; }
+
+  .code-inline { background: #0f1419; color: #67e8f9; padding: 1px 6px; border-radius: 3px; font-family: 'Consolas', monospace; font-size: 12px; }
+  body[data-theme="light"] .code-inline { background: #f0fdfa; color: #0891b2; }
+
+  /* 비교 테이블 */
+  .compare-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-tbl th, .compare-tbl td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #222; vertical-align: top; }
+  body[data-theme="light"] .compare-tbl th, body[data-theme="light"] .compare-tbl td { border-bottom: 1px solid #e5e7eb; }
+  .compare-tbl thead th { background: #0f1419; color: #8b92a0; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+  body[data-theme="light"] .compare-tbl thead th { background: #f9fafb; color: #6b7280; }
+  .compare-tbl td:first-child { width: 200px; font-weight: 700; color: #e4e6eb; }
+  body[data-theme="light"] .compare-tbl td:first-child { color: #111827; }
+  .compare-tbl .legacy { color: #ef4444; }
+  .compare-tbl .ours { color: #06b6d4; font-weight: 600; }
+</style>
+</head>
+<body>
+<script>window.CURRENT_PAGE = 'reliability';</script>
+<script src="../assets/layout.js" data-base="../"></script>
+
+<main class="main">
+  <div class="section-badge">RELIABILITY — NO SILENT DATA LOSS</div>
+  <h1>안정성 · 무중단 운영</h1>
+  <div class="subtitle">
+    병원 업무는 <b>"실수는 해도 데이터는 잃으면 안 되는"</b> 환경입니다.
+    비쥬웍스 아이차트는 여러 직원이 동시에 작업하는 상황에서도 데이터가 조용히 사라지지 않도록 <b>구조적으로</b> 보호합니다.
+  </div>
+
+  <!-- 히어로 -->
+  <div class="rel-hero">
+    <div class="rel-hero-icon">🛡</div>
+    <div>
+      <h2>편의보다 무결성, 속도보다 정확성</h2>
+      <p>
+        상담사·데스크·간호사·원장이 같은 환자 차트를 동시에 다뤄도 — <b>누가 무엇을 덮어썼는지 모르는 데이터 손실</b>이 발생하지 않도록,
+        코드 표준·DB 제약·예외 처리·롤백 전략이 다층으로 맞물려 동작합니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- 지표 -->
+  <div class="rel-stats">
+    <div class="rel-stat">
+      <div class="rel-stat-label">코드 표준</div>
+      <div class="rel-stat-value">강제</div>
+      <div class="rel-stat-desc">save-lock, 캡슐화, 파라미터 바인딩 필수</div>
+    </div>
+    <div class="rel-stat">
+      <div class="rel-stat-label">에러 처리</div>
+      <div class="rel-stat-value">중앙 집계</div>
+      <div class="rel-stat-desc">globalErrorHandler로 모든 예외 일관 포착</div>
+    </div>
+    <div class="rel-stat">
+      <div class="rel-stat-label">회귀 감지</div>
+      <div class="rel-stat-value">k6 + smoke</div>
+      <div class="rel-stat-desc">성능·기능 회귀를 정기 정량 측정</div>
+    </div>
+    <div class="rel-stat">
+      <div class="rel-stat-label">전환 롤백</div>
+      <div class="rel-stat-value">병행 운영</div>
+      <div class="rel-stat-desc">레거시를 읽기 전용으로 병행 보존</div>
+    </div>
+  </div>
+
+  <!-- ============ 1. 동시 작업 보호 ============ -->
+  <div class="rel-card">
+    <div class="rel-head">
+      <span class="rel-num">[안정성 1]</span>
+      <span class="rel-title">🔄 동시 작업 중 데이터 손실 방지</span>
+      <span class="rel-badge">운영 중 + 계획</span>
+    </div>
+    <div class="rel-lead">여러 직원이 같은 환자의 정보를 동시에 수정해도 한쪽 변경이 조용히 사라지지 않도록 구조화합니다.</div>
+
+    <div class="scenario-box">
+      <span class="label">전형적 사고 시나리오</span>
+      09:10 상담사 A가 환자 김○○ 메모 수정 중 · 09:11 데스크 B가 같은 환자 전화번호 수정 저장 · 09:12 A가 메모 저장 →
+      <b style="color:#ef4444">B의 전화번호 수정이 통째로 사라짐</b>. 경고도, 기록도 없음.
+    </div>
+
+    <h3>운영 중인 보호 장치</h3>
+    <ul>
+      <li><b>Save-Lock 안전 패턴</b> — <code class="code-inline">beginSave</code>/<code class="code-inline">finishSave</code>는 <code class="code-inline">try/finally</code>로 쌍을 맞추는 것을 개발 표준이 강제하여 UI 영구 잠금 예방</li>
+      <li><b>CustomerStore 캡슐화 규칙</b> — 외부에서 내부 상태 직접 수정을 차단하여 동시 수정 시 예측 불가 상태 방지</li>
+      <li><b>자동화된 캡슐화 점검 도구</b> — 코드 변경 시 회귀를 자동 감지</li>
+      <li><b>SQL 파라미터 바인딩 의무화</b> — 동시 실행 중 쿼리 꼬임 · 주입 경로 차단</li>
+    </ul>
+
+    <h3>확장 계획 <span class="rel-badge plan">Phase 1~3 단계 도입</span></h3>
+    <ul>
+      <li><b>Optimistic Lock (버전 필드)</b> — 저장 시 원본과 다르면 "다른 사용자가 먼저 수정했습니다" 알림 + 병합 선택권</li>
+      <li><b>예약 슬롯 복합 유니크 제약</b> — 시간 + 의사 + 장비 기준 이중 배정 원천 차단</li>
+      <li><b>Idempotency Key</b> — 네트워크 지연으로 수납 버튼을 여러 번 눌러도 중복 처리되지 않음</li>
+    </ul>
+
+    <p style="font-size:12px;color:#8b92a0;margin-top:10px">
+      ※ 자세한 시나리오는 <a href="issue-sync.html" style="color:#4a9eff">동시성 / 데이터 정합성</a> 페이지 참조.
+    </p>
+  </div>
+
+  <!-- ============ 2. 예외 · 장애 처리 ============ -->
+  <div class="rel-card">
+    <div class="rel-head">
+      <span class="rel-num">[안정성 2]</span>
+      <span class="rel-title">⚠ 예외 · 장애 중앙 처리</span>
+      <span class="rel-badge">운영 중</span>
+    </div>
+    <div class="rel-lead">오류가 발생해도 <b>정보 누출 없이 표준 포맷으로 포착</b>되어, 담당자가 즉시 원인을 파악할 수 있습니다.</div>
+
+    <h3>운영 중인 구조</h3>
+    <ul>
+      <li><b>globalErrorHandler</b> — 모든 예외가 한 곳에서 포착 · 분류되어 라우트마다 try/catch를 반복 작성할 필요 없음</li>
+      <li><b>표준 에러 응답 포맷</b> — 내부 스택 트레이스 · 경로 · DB 에러 메시지가 클라이언트로 그대로 노출되지 않음</li>
+      <li><b>민감 정보 로깅 금지 규칙</b> — 주민번호 · 비밀번호가 에러 로그에 포함되지 않도록 개발 표준에서 명시</li>
+      <li><b>요청 단위 reqId 역추적</b> — 에러 발생 시 사용자 요청 → 서비스 호출 → DB 쿼리 전 구간을 시간 순으로 복원</li>
+    </ul>
+
+    <div class="scenario-box">
+      <span class="label">실무 효과</span>
+      "오후 3시쯤 수납 화면에서 에러 났다고 하는데…" — 담당자가 reqId 하나로 해당 시간대·사용자·요청·쿼리를 즉시 조회.
+      <b style="color:#06b6d4">"어디서부터 문제인지 모른다"가 없는 구조</b>입니다.
+    </div>
+  </div>
+
+  <!-- ============ 3. 회귀 감지 ============ -->
+  <div class="rel-card">
+    <div class="rel-head">
+      <span class="rel-num">[안정성 3]</span>
+      <span class="rel-title">📊 성능 · 기능 회귀 감지</span>
+      <span class="rel-badge">운영 중</span>
+    </div>
+    <div class="rel-lead">"예전보다 느려진 것 같아요"를 감(感)이 아닌 <b>정량 지표</b>로 잡아냅니다.</div>
+
+    <h3>운영 중인 검증 자산</h3>
+    <ul>
+      <li><b>k6 부하 시나리오</b> — 고객 검색 · 리콜 조회 등 핵심 플로우의 p50/p95/p99 정기 측정</li>
+      <li><b>Smoke 테스트 5종</b> — auth · login-history · customer-all-panels · customer-update · prod-compare</li>
+      <li><b>WORK ↔ PROD 응답 비교</b> — 배포 전후 핵심 응답이 동일한지 자동 비교로 회귀 조기 발견</li>
+      <li><b>실측 개선 이력</b> — 커버링 인덱스 도입으로 p95 최대 <b>-97%</b> (3.3초 → 0.1초) 개선을 수치로 증빙</li>
+    </ul>
+
+    <h3>청주김안과 도입 시 효과</h3>
+    <ul>
+      <li>초기 이관 후 p95 지표를 <b>기준선(baseline)</b>으로 확보</li>
+      <li>이후 기능 추가마다 k6로 회귀 여부를 검증 — "어느 날 갑자기 느려졌다"를 예방</li>
+      <li>원장님이 체감하는 속도 변화를 <b>수치로 설명</b>할 수 있음</li>
+    </ul>
+  </div>
+
+  <!-- ============ 4. 전환 · 롤백 ============ -->
+  <div class="rel-card">
+    <div class="rel-head">
+      <span class="rel-num">[안정성 4]</span>
+      <span class="rel-title">↩ 안전한 전환 · 롤백 전략</span>
+      <span class="rel-badge">도입 단계</span>
+    </div>
+    <div class="rel-lead">새 시스템으로의 전환은 "되돌릴 수 없는 결정"이 아닙니다. 문제가 생기면 즉시 이전 방식으로 복귀할 수 있도록 설계합니다.</div>
+
+    <h3>도입 로드맵에 반영된 안전 장치</h3>
+    <ul>
+      <li><b>레거시 시스템 읽기 전용 병행 보존</b> — 전면 오픈 후에도 기존 성민CRM을 즉시 폐기하지 않고 조회 가능 상태로 유지</li>
+      <li><b>D-day 전일 전수 백업</b> — 전환 직전 DB · 파일 · 설정 전체 스냅샷 확보</li>
+      <li><b>이관 후 교차 검증 리포트</b> — 건수 · 합계 · 샘플 일치율을 서면으로 확인한 뒤에만 다음 단계 진행</li>
+      <li><b>파일럿 Go/No-Go 기준</b> — Critical 버그 0건 · 성능 목표 충족 · 만족도 통과를 모두 만족해야 전면 오픈</li>
+      <li><b>W12 원내 상주 지원</b> — 전환 직후 한 주간 비쥬웍스 엔지니어가 원내에 상주하며 즉시 대응</li>
+    </ul>
+
+    <p style="font-size:12px;color:#8b92a0;margin-top:10px">
+      ※ 상세 전환 단계는 <a href="roadmap.html" style="color:#4a9eff">도입 단계별 로드맵</a> 참조.
+    </p>
+  </div>
+
+  <!-- ============ 5. 코드 레벨 규율 ============ -->
+  <div class="rel-card">
+    <div class="rel-head">
+      <span class="rel-num">[안정성 5]</span>
+      <span class="rel-title">📐 안정성을 코드로 강제하는 개발 규율</span>
+      <span class="rel-badge">운영 중</span>
+    </div>
+    <div class="rel-lead">안정성은 "신경 쓰면 지켜지는" 것이 아니라 <b>"규칙이 자동으로 강제하는"</b> 것이어야 합니다.</div>
+
+    <h3>개발 표준에 내재화된 규칙</h3>
+    <ul>
+      <li><b>Route → Service → Schema 3레이어 강제</b> — 모든 신규 기능이 일관된 구조로 작성되어, 어디서 문제가 나도 찾기 쉬움</li>
+      <li><b>77개 Zod 입력 검증 스키마</b> — 잘못된 데이터가 DB에 닿기 전에 경계에서 차단</li>
+      <li><b>SQL 문자열 결합 금지</b> — 파라미터 바인딩만 허용. 주입 경로뿐 아니라 데이터 꼬임도 예방</li>
+      <li><b>save-lock / 캡슐화 회귀 점검 도구</b> — 규칙 위반 시 자동 감지</li>
+      <li><b>보안 · 인증 변경은 오너 승인 필수</b> — 핵심 자산의 단독 변경 차단</li>
+    </ul>
+
+    <div class="scenario-box">
+      <span class="label">신규 개발자 온보딩 예시</span>
+      개발 표준 문서를 따라 첫 PR을 작성하면 — try/catch 없이도 에러가 중앙 처리되고, 검증 스키마가 자동 적용되고,
+      로깅이 자동 붙습니다. <b style="color:#06b6d4">"개발자가 잊어도 안정성이 누락되지 않는 구조"</b>입니다.
+    </div>
+  </div>
+
+  <!-- ============ 레거시 vs 아이차트 ============ -->
+  <h2>레거시 vs 아이차트 — 안정성 수준 비교</h2>
+  <div class="card">
+    <table class="compare-tbl">
+      <thead>
+        <tr>
+          <th>안정성 항목</th>
+          <th class="red">레거시 (C# + MSSQL)</th>
+          <th class="green">아이차트 (EyeChartPro)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>동시 수정 충돌</td>
+          <td class="legacy">Last-Write-Wins (조용한 덮어쓰기)</td>
+          <td class="ours">Save-Lock + Optimistic Lock(계획)</td>
+        </tr>
+        <tr>
+          <td>예약 이중 배정</td>
+          <td class="legacy">Race Condition으로 발생 가능</td>
+          <td class="ours">복합 유니크 제약 도입 계획</td>
+        </tr>
+        <tr>
+          <td>수납 중복 처리</td>
+          <td class="legacy">버튼 반복 클릭 시 다중 저장</td>
+          <td class="ours">Idempotency Key 도입 계획</td>
+        </tr>
+        <tr>
+          <td>예외 처리</td>
+          <td class="legacy">화면마다 개별 try/catch · 누락 빈번</td>
+          <td class="ours">globalErrorHandler 중앙 집계</td>
+        </tr>
+        <tr>
+          <td>에러 원인 추적</td>
+          <td class="legacy">사용자 제보 → 개발자 수동 로그 탐색</td>
+          <td class="ours">reqId 하나로 전 구간 시간 순 복원</td>
+        </tr>
+        <tr>
+          <td>회귀 감지</td>
+          <td class="legacy">"느려진 것 같다" 체감으로만 인지</td>
+          <td class="ours">k6 + smoke 정기 정량 측정</td>
+        </tr>
+        <tr>
+          <td>배포 롤백</td>
+          <td class="legacy">수동 복구 · 전환 시 이전 시스템 폐기</td>
+          <td class="ours">병행 운영 + Go/No-Go 기준 + 전수 백업</td>
+        </tr>
+        <tr>
+          <td>입력값 안전성</td>
+          <td class="legacy">화면마다 수동 검증 · 누락 가능</td>
+          <td class="ours">77개 스키마 경계 일괄 검증</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============ 핵심 메시지 ============ -->
+  <h2>비쥬웍스가 안정성을 말할 수 있는 이유</h2>
+  <div class="card">
+    <div class="card-title">★ 안정성은 기능이 아니라 구조입니다</div>
+    <ul class="bullet" style="margin-top:12px">
+      <li><b>"실수가 없어야 안정"이 아니라 "실수해도 데이터가 남는" 구조</b> — Save-Lock, Optimistic Lock(계획), 복합 유니크 제약(계획)이 사람의 주의력에 의존하지 않습니다.</li>
+      <li><b>"장애가 없어야 안정"이 아니라 "장애를 빠르게 추적 가능한" 구조</b> — reqId 하나로 모든 구간을 역추적할 수 있으니 "원인을 모른다"가 사라집니다.</li>
+      <li><b>"느려지지 않아야 안정"이 아니라 "느려졌음을 수치로 감지하는" 구조</b> — k6/smoke 체계가 감(感)이 아닌 기준선(baseline)으로 판단합니다.</li>
+      <li><b>"전환은 되돌릴 수 없다"가 아니라 "문제 생기면 바로 복귀 가능한" 구조</b> — 레거시 병행 보존과 Go/No-Go 기준이 도입 리스크 자체를 낮춥니다.</li>
+    </ul>
+    <blockquote class="quote">
+      병원에서 가장 두려운 것은 "눈에 보이는 장애"가 아니라 <b>"눈에 보이지 않는 데이터 손실"</b>입니다.<br>
+      비쥬웍스는 이 조용한 손실을 막기 위해 — 기능보다 규율, 편의보다 무결성을 우선합니다.
+    </blockquote>
+  </div>
+
+  <h2>관련 문서</h2>
+  <div class="card">
+    <ul class="bullet">
+      <li><a href="foundation.html" style="color:#22c55e">기술적 기반</a> — 안정성을 뒷받침하는 아키텍처 · 성능 · 관측 자산</li>
+      <li><a href="security.html" style="color:#22c55e">보안 · 컴플라이언스</a> — 무결성의 반쪽인 기밀성 · 접근 통제</li>
+      <li><a href="issue-sync.html" style="color:#4a9eff">동시성 / 데이터 정합성</a> — 동시성 이슈의 구체 시나리오</li>
+      <li><a href="roadmap.html" style="color:#4a9eff">도입 단계별 로드맵</a> — 안전 전환 · 롤백 전략의 구체 절차</li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>경영진 통합 컨트롤 타워 — 청주김안과</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .compare-tbl { width: 100%; border-collapse: separate; border-spacing: 0; background: #161b22; border: 1px solid #222; border-radius: 10px; overflow: hidden; margin-top: 14px; }
+  body[data-theme="light"] .compare-tbl { background: #fff; border-color: #e5e7eb; }
+  .compare-tbl caption { caption-side: top; text-align: left; padding: 16px 20px; background: #0f1419; color: #e4e6eb; font-size: 14px; font-weight: 700; border-bottom: 1px solid #222; }
+  body[data-theme="light"] .compare-tbl caption { background: #f9fafb; color: #111827; border-bottom-color: #e5e7eb; }
+  .compare-tbl caption small { font-weight: 400; color: #8b92a0; font-size: 12px; margin-left: 10px; }
+  .compare-tbl th, .compare-tbl td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #222; font-size: 13.5px; vertical-align: top; }
+  body[data-theme="light"] .compare-tbl th, body[data-theme="light"] .compare-tbl td { border-bottom: 1px solid #e5e7eb; }
+  .compare-tbl thead th { background: #0f1419; font-weight: 700; font-size: 12px; color: #8b92a0; text-transform: uppercase; letter-spacing: .5px; }
+  body[data-theme="light"] .compare-tbl thead th { background: #f9fafb; color: #6b7280; }
+  .compare-tbl tbody tr:last-child td { border-bottom: 0; }
+  .compare-tbl td:first-child { width: 160px; color: #e4e6eb; font-weight: 700; }
+  body[data-theme="light"] .compare-tbl td:first-child { color: #111827; }
+  .compare-tbl .now { color: #ef4444; }
+  .compare-tbl .after { color: #4a9eff; font-weight: 600; }
+
+  .callout { display: flex; align-items: center; gap: 14px; background: #1c2838; border-left: 4px solid #4a9eff; border-radius: 6px; padding: 18px 22px; margin-top: 22px; }
+  body[data-theme="light"] .callout { background: #eff6ff; }
+  .callout .chk { width: 28px; height: 28px; border-radius: 50%; background: #4a9eff; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; }
+  .callout-text { font-size: 15px; font-weight: 700; color: #fff; }
+  body[data-theme="light"] .callout-text { color: #1e3a5f; }
+
+  .sys-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 22px; }
+  .sys { background: #161b22; border: 1px solid #222; border-radius: 10px; padding: 26px 20px; text-align: center; }
+  body[data-theme="light"] .sys { background: #fff; border-color: #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .sys-icon { display: inline-flex; width: 56px; height: 56px; border-radius: 50%; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 14px; }
+  .sys:nth-child(1) .sys-icon { background: #1e3a5f; color: #4a9eff; }
+  .sys:nth-child(2) .sys-icon { background: #14532d; color: #4ade80; }
+  .sys:nth-child(3) .sys-icon { background: #7f1d1d; color: #f87171; }
+  .sys:nth-child(4) .sys-icon { background: #78350f; color: #fbbf24; }
+  body[data-theme="light"] .sys:nth-child(1) .sys-icon { background: #dbeafe; color: #2563eb; }
+  body[data-theme="light"] .sys:nth-child(2) .sys-icon { background: #dcfce7; color: #16a34a; }
+  body[data-theme="light"] .sys:nth-child(3) .sys-icon { background: #fee2e2; color: #dc2626; }
+  body[data-theme="light"] .sys:nth-child(4) .sys-icon { background: #fef3c7; color: #d97706; }
+  .sys-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  body[data-theme="light"] .sys-title { color: #111827; }
+  .sys-desc { font-size: 12.5px; color: #8b92a0; line-height: 1.5; }
+  body[data-theme="light"] .sys-desc { color: #6b7280; }
+
+  @media (max-width: 1100px) { .sys-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<script>window.CURRENT_PAGE = 'control-tower';</script>
+<script src="../assets/layout.js" data-base="../"></script>
+
+<main class="main">
+  <div class="section-badge">CONTROL TOWER</div>
+  <h1>경영진 통합 컨트롤 타워</h1>
+  <div class="subtitle">데이터가 연결되면, 보이지 않던 병원 운영이 숫자로 설명됩니다.</div>
+
+  <table class="compare-tbl">
+    <caption>운영 현황 비교 — 현재 vs 차세대 CRM 도입 후 <small>각 항목별로 현재 운영 방식과 도입 후의 차이를 비교합니다</small></caption>
+    <thead>
+      <tr>
+        <th>구분</th>
+        <th>현재</th>
+        <th>도입 후</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>매출 파악</td>
+        <td class="now">월말 합산 중심, 원장/수술/유입별 분해 어려움</td>
+        <td class="after">일별 · 수술별 · 원장별 매출 실시간 조회</td>
+      </tr>
+      <tr>
+        <td>상담 성과</td>
+        <td class="now">감으로 판단, 상담사 편차만 체감</td>
+        <td class="after">상담사별 전환율 · 프리미엄 비중 수치화</td>
+      </tr>
+      <tr>
+        <td>인센티브 / 인사</td>
+        <td class="now">기준 불투명, 설명 어려움</td>
+        <td class="after">성과 기준 수치화 → 인센티브 · 인사평가 설계 가능</td>
+      </tr>
+      <tr>
+        <td>마케팅 ROI</td>
+        <td class="now">유입은 보이지만 수술 연결 추적 어려움</td>
+        <td class="after">채널별 유입 → 상담 → 수술 전환 추적</td>
+      </tr>
+      <tr>
+        <td>운영 병목</td>
+        <td class="now">체류 시간, 이탈 지점 파악 어려움</td>
+        <td class="after">고객 체류시간 · 이탈 구간 · 상담 병목 가시화</td>
+      </tr>
+      <tr>
+        <td>비용 / 운영 관리</td>
+        <td class="now">부서별 수기 관리, 사각지대 존재</td>
+        <td class="after">재고 · 비용 이상 감지 및 사전 알림</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="chk">✓</div>
+    <div class="callout-text">매출도, 상담도, 인사도 — 하나의 흐름 안에서 보이기 시작합니다</div>
+  </div>
+
+  <div class="sys-grid">
+    <div class="sys">
+      <div class="sys-icon">👁</div>
+      <div class="sys-title">LOOCUS VISION</div>
+      <div class="sys-desc">안과 검사장비 통합 뷰어</div>
+    </div>
+    <div class="sys">
+      <div class="sys-icon">👥</div>
+      <div class="sys-title">CRM (아이차트)</div>
+      <div class="sys-desc">환자 여정 통합 관리</div>
+    </div>
+    <div class="sys">
+      <div class="sys-icon">📞</div>
+      <div class="sys-title">CTI 콜센터</div>
+      <div class="sys-desc">전화 · 상담 통합 응대</div>
+    </div>
+    <div class="sys">
+      <div class="sys-icon">📄</div>
+      <div class="sys-title">EMR 전자차트</div>
+      <div class="sys-desc">의무기록 · 처방 · 수납</div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

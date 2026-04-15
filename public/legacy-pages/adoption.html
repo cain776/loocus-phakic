@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>도입 방안 — 청주김안과</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .phase-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 28px; }
+  .pcard { background: #161b22; border: 1px solid #222; border-top: 3px solid #4a9eff; border-radius: 10px; padding: 22px 18px; position: relative; }
+  body[data-theme="light"] .pcard { background: #fff; border: 1px solid #e5e7eb; border-top: 3px solid #4a9eff; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .pcard-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  .pcard-title { font-size: 15px; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px; }
+  body[data-theme="light"] .pcard-title { color: #111827; }
+  .pcard-icon { font-size: 17px; color: #4a9eff; }
+  .pcard-badge { font-size: 11px; font-weight: 700; color: #22c55e; background: #14532d; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  body[data-theme="light"] .pcard-badge { background: #dcfce7; color: #15803d; }
+  .pcard-desc { font-size: 12.5px; color: #8b92a0; line-height: 1.5; margin-bottom: 14px; min-height: 36px; }
+  body[data-theme="light"] .pcard-desc { color: #6b7280; }
+  .pcard ul { list-style: none; }
+  .pcard ul li { position: relative; padding: 5px 0 5px 22px; font-size: 13px; color: #dfe2e8; line-height: 1.5; }
+  body[data-theme="light"] .pcard ul li { color: #1f2937; }
+  .pcard ul li::before { content: "✓"; position: absolute; left: 0; width: 16px; height: 16px; background: #14532d; color: #4ade80; border-radius: 50%; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; top: 6px; }
+  body[data-theme="light"] .pcard ul li::before { background: #dcfce7; color: #16a34a; }
+  .pcard.pilot ul li::before,
+  .pcard.launch ul li::before { content: "●"; background: transparent; color: #f59e0b; font-size: 14px; }
+
+  .effect-section { margin-top: 40px; }
+  .effect-section h2 { display: flex; align-items: center; gap: 10px; font-size: 18px; border-bottom: 1px solid #222; padding-bottom: 12px; margin-bottom: 0; }
+  body[data-theme="light"] .effect-section h2 { border-bottom-color: #e5e7eb; }
+  .effect-section h2 .ic { color: #4a9eff; font-size: 18px; }
+
+  .effect-tbl { width: 100%; border-collapse: collapse; margin-top: 14px; background: #161b22; border: 1px solid #222; border-radius: 8px; overflow: hidden; }
+  body[data-theme="light"] .effect-tbl { background: #fff; border-color: #e5e7eb; }
+  .effect-tbl th, .effect-tbl td { padding: 16px 18px; text-align: left; border-bottom: 1px solid #222; font-size: 14px; background: #161b22; }
+  body[data-theme="light"] .effect-tbl th, body[data-theme="light"] .effect-tbl td { background: #fff; border-bottom-color: #e5e7eb; }
+  .effect-tbl tbody tr:last-child td { border-bottom: 0; }
+  .effect-tbl thead th { background: #0f1419 !important; color: #8b92a0 !important; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+  body[data-theme="light"] .effect-tbl thead th { background: #f3f4f6 !important; color: #6b7280 !important; }
+  .effect-tbl td:first-child { width: 200px; font-weight: 700; color: #e4e6eb; }
+  body[data-theme="light"] .effect-tbl td:first-child { color: #111827; }
+  .effect-tbl .before { color: #8b92a0; }
+  .effect-tbl .after { color: #4a9eff; font-weight: 600; }
+  body[data-theme="light"] .effect-tbl .after { color: #2563eb; }
+
+  @media (max-width: 1100px) { .phase-row { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<script>window.CURRENT_PAGE = 'adoption';</script>
+<script src="../assets/layout.js" data-base="../"></script>
+
+<main class="main">
+  <div class="section-badge">ADOPTION PLAN</div>
+  <h1>도입 방안</h1>
+  <div class="subtitle">아이차트(EyeChartPro) 안정적 전환을 위한 5단계 로드맵</div>
+
+  <h2>5단계 도입 절차</h2>
+  <div class="phase-row">
+    <div class="pcard">
+      <div class="pcard-head">
+        <div class="pcard-title"><span class="pcard-icon">📋</span>현황 분석</div>
+        <div class="pcard-badge">2주</div>
+      </div>
+      <div class="pcard-desc">기존 시스템 분석, 요구사항 정의</div>
+      <ul>
+        <li>기존 CRM 시스템 분석</li>
+        <li>차트 데이터 분석</li>
+        <li>요구사항 정의</li>
+      </ul>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-head">
+        <div class="pcard-title"><span class="pcard-icon">🗃</span>데이터 이관</div>
+        <div class="pcard-badge">3주</div>
+      </div>
+      <div class="pcard-desc">고객 · 예약 · 수술 이력 마이그레이션</div>
+      <ul>
+        <li>고객 정보 마이그레이션</li>
+        <li>예약, 수술 정보 마이그레이션</li>
+        <li>코드 매핑</li>
+      </ul>
+    </div>
+
+    <div class="pcard">
+      <div class="pcard-head">
+        <div class="pcard-title"><span class="pcard-icon">⚙</span>커스터마이징</div>
+        <div class="pcard-badge">4주</div>
+      </div>
+      <div class="pcard-desc">병원 전용 검사 항목 · 상담 양식 설정</div>
+      <ul>
+        <li>전용 검사 항목 반영</li>
+        <li>상담 양식 설정</li>
+        <li>리콜 정책 설정</li>
+      </ul>
+    </div>
+
+    <div class="pcard pilot">
+      <div class="pcard-head">
+        <div class="pcard-title"><span class="pcard-icon">🧪</span>파일럿 운영</div>
+        <div class="pcard-badge">2주</div>
+      </div>
+      <div class="pcard-desc">일부 직원 대상 병행 운영, 안정화</div>
+      <ul>
+        <li>시스템 병행 운영</li>
+        <li>안정성 검증</li>
+        <li>개선사항 반영</li>
+      </ul>
+    </div>
+
+    <div class="pcard launch">
+      <div class="pcard-head">
+        <div class="pcard-title"><span class="pcard-icon">🚀</span>전면 오픈</div>
+        <div class="pcard-badge">상시</div>
+      </div>
+      <div class="pcard-desc">전 직원 전환, 교육 및 사후 지원</div>
+      <ul>
+        <li>전 직원 전환</li>
+        <li>교육 및 지원</li>
+        <li>정식 운영</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="effect-section">
+    <h2><span class="ic">📈</span> 도입 후 기대 효과</h2>
+    <table class="effect-tbl">
+      <thead>
+        <tr><th>영역</th><th>Before</th><th>After</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>업무 효율</td>
+          <td class="before">3개 시스템 이중 입력</td>
+          <td class="after">1개 시스템 단일 입력</td>
+        </tr>
+        <tr>
+          <td>데이터 활용</td>
+          <td class="before">통합 분석 불가</td>
+          <td class="after">실시간 통합 대시보드</td>
+        </tr>
+        <tr>
+          <td>확장성</td>
+          <td class="before">신규 기능마다 커스텀 개발</td>
+          <td class="after">표준 구조 기반 신속 확장</td>
+        </tr>
+        <tr>
+          <td>환자 관리</td>
+          <td class="before">단계별 분절</td>
+          <td class="after">End-to-End 단일 고객뷰</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>도입 효과 시뮬레이션</h2>
+  <p class="desc" style="text-align:center;margin-bottom:14px;">보이지 않던 것이, <b>관리 가능한 기준</b>으로 바뀝니다.</p>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <table class="tbl" style="margin-top:0;">
+      <thead>
+        <tr>
+          <th style="width:140px;">구분</th>
+          <th class="red">현재 운영 구조</th>
+          <th class="blue">도입 후</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>상담 품질</b></td>
+          <td>기록되지 않음 → 분석 불가 → 개선 기준 부재</td>
+          <td><b class="blue">상담 기록 · AI 기반 분석 · 개선 근거 확보</b></td>
+        </tr>
+        <tr>
+          <td><b>인력 리스크</b></td>
+          <td>퇴사 시 노하우 소멸 → 매출 영향</td>
+          <td><b class="blue">AI에 노하우 축적 → 인력 교체에도 품질 유지</b></td>
+        </tr>
+        <tr>
+          <td><b>상담 설득력</b></td>
+          <td>경험 기반 설명 → 환자 이해도 편차</td>
+          <td><b class="blue">객관 분석·시각화 → 설명 일관성 확보</b></td>
+        </tr>
+        <tr>
+          <td><b>재고 관리</b></td>
+          <td>수기·엑셀 관리 → 기준 부재 → 관리 부담</td>
+          <td><b class="blue">자동 발주 기반 재고 관리 → 운영 기준 확립</b></td>
+        </tr>
+        <tr>
+          <td><b>현장 운영</b></td>
+          <td>인력 의존 → 진료 집중도 분산</td>
+          <td><b class="blue">웨어러블·태블릿 기반 실시간 지원 → 진료 집중</b></td>
+        </tr>
+        <tr>
+          <td><b>결제 · 정산</b></td>
+          <td>결제 수단 제약 → 환자 편의 저하</td>
+          <td><b class="blue">결제 수단 통합 → 결제 허들 제거</b></td>
+        </tr>
+        <tr>
+          <td><b>고객 리텐션</b></td>
+          <td>시술 후 관리 개인 의존 → 재방문 유도 불안정</td>
+          <td><b class="blue">PHR 기반 시술 케어 · 맞춤 안내 자동화</b></td>
+        </tr>
+        <tr>
+          <td><b>운영 관리</b></td>
+          <td>예약·접수·시술·VOC 관리 분절 → 상황 파악 지연</td>
+          <td><b class="blue">예약·접수·시술 관제 + VOC·리뷰 자동 관리</b></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="closing">개별 기능은 각각의 문제를 해결하지만, <b>통합은 병원의 운영 구조 자체</b>를 바꿉니다</div>
+</main>
+</body>
+</html>
